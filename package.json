@@ -1,5 +1,29 @@
 {
   "dependencies": {
     "bcryptjs": "^2.4.3"
-  }
+  },
+  "name": "authenticate-me",
+  "description": "## Database Schema Design <img width=\"742\" alt=\"airbnb_dbdiagram\" src=\"https://user-images.githubusercontent.com/100194132/197303136-ec44b7df-bac7-4702-b6ef-35853795d1a7.png\">",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm --prefix backend install backend",
+    "dev:backend": "npm install --prefix backend start",
+    "sequelize": "npm run --prefix backend sequelize",
+    "sequelize-cli": "npm run --prefix backend sequelize-cli",
+    "start": "npm start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FarhadK2022/API-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FarhadK2022/API-Project/issues"
+  },
+  "homepage": "https://github.com/FarhadK2022/API-Project#readme"
 }
