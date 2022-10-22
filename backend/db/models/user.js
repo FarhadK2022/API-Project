@@ -43,6 +43,36 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull:false,
+        validate: {
+          isAlpha: true,
+          capitalized(value) {
+            const letters = value.split('')
+            for (let letter of letters){
+              if (letter[0] !== letter[0].toUpperCase()){
+                throw new Error("First name needs to be capitalized")
+              }
+            }
+          }
+        }
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull:false,
+        validate: {
+          isAlpha: true,
+          capitalized(value) {
+            const letters = value.split('')
+            for (let letter of letters){
+              if (letter[0] !== letter[0].toUpperCase()){
+                throw new Error("Last name needs to be capitalized")
+              }
+            }
+          }
+        }
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
