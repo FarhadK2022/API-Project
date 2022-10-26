@@ -29,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isDate: true,
-        isBefore: endDate,
       }
     },
     endDate: {
@@ -37,7 +36,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isDate: true,
-        isAfter: startDate,
 
       }
     },
