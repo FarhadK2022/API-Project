@@ -27,9 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         return await User.scope("currentUser").findByPk(user.id);
       }
     }
-    static async signup({ username, email, password }) {
+    static async signup({ firstName, lastName, username, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
+        firstName,
+        lastName,
         username,
         email,
         hashedPassword
@@ -38,7 +40,11 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      // define association here
+      User.hasMany(models.Spot, {foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true});
+
+      User.hasMany(models.Booking, {foreignKey: 'userId', onDelete: 'CASCADE', hooks: true});
+
+      User.hasMany(models.Review, {foreignKey: 'userId', onDelete: 'CASCADE', hooks: true});
     }
   }
   User.init(
@@ -49,11 +55,8 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isAlpha: true,
           capitalized(value) {
-            const letters = value.split('')
-            for (let letter of letters){
-              if (letter[0] !== letter[0].toUpperCase()){
-                throw new Error("First name needs to be capitalized")
-              }
+            if (value[0] !== value[0].toUpperCase()){
+              throw new Error("First name needs to be capitalized")
             }
           }
         }
@@ -64,18 +67,17 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isAlpha: true,
           capitalized(value) {
-            const letters = value.split('')
-            for (let letter of letters){
-              if (letter[0] !== letter[0].toUpperCase()){
-                throw new Error("Last name needs to be capitalized")
-              }
+            if (value[0] !== value[0].toUpperCase()){
+              throw new Error("Last name needs to be capitalized")
             }
+
           }
         }
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           len: [4, 30],
           isNotEmail(value) {
@@ -85,19 +87,19 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      hashedPassword: {
+        type: DataTypes.STRING.BINARY,
+        allowNull: false,
+        validate: {
+          len: [60, 60],
+        },
+      },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           len: [3, 256],
           isEmail: true,
-        },
-      },
-      hashedPassword: {
-        type: DataTypes.STRING.BINARY,
-        allowNull: false,
-        validate: {
-          len: [60, 60],
         },
       },
     },
