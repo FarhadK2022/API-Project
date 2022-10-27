@@ -27,9 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         return await User.scope("currentUser").findByPk(user.id);
       }
     }
-    static async signup({ username, email, password }) {
+    static async signup({ firstName, lastName, username, email, password }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
+        firstName,
+        lastName,
         username,
         email,
         hashedPassword
@@ -53,11 +55,8 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isAlpha: true,
           capitalized(value) {
-            const letters = value.split('')
-            for (let letter of letters){
-              if (letter[0] !== letter[0].toUpperCase()){
-                throw new Error("First name needs to be capitalized")
-              }
+            if (value[0] !== value[0].toUpperCase()){
+              throw new Error("First name needs to be capitalized")
             }
           }
         }
@@ -68,12 +67,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isAlpha: true,
           capitalized(value) {
-            const letters = value.split('')
-            for (let letter of letters){
-              if (letter[0] !== letter[0].toUpperCase()){
-                throw new Error("Last name needs to be capitalized")
-              }
+            if (value[0] !== value[0].toUpperCase()){
+              throw new Error("Last name needs to be capitalized")
             }
+
           }
         }
       },
