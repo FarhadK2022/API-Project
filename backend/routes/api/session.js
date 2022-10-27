@@ -20,7 +20,7 @@ const router = express.Router();
 
 router.post(
   "/",
-  validateLogin,
+  // validateLogin,
   async (req, res, next) => {
     const { credential, password } = req.body;
 
@@ -57,9 +57,9 @@ router.post(
 
     await setTokenCookie(res, user);
 
-    return res.json({
-      user,
-    });
+    return res.json(
+      user.toSafeObject()
+    );
   }
 );
 

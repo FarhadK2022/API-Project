@@ -5,6 +5,7 @@ const { User } = require("../../db/models");
 
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+const db = require("../../db/models");
 
 const router = express.Router();
 
@@ -30,40 +31,69 @@ const validateSignup = [
     .withMessage("Password must be 6 characters or more."),
   handleValidationErrors,
 ];
-
-router.post("/", validateSignup, async (req, res) => {
-  const { firstName, lastName, email, password, username } = req.body;
-  if (User.email) {
-    return res.json({
-      message: "User already exists",
-      statusCode: 403,
-      errors: {
-        email: "User with that email already exists",
-      },
+//Sign up a User
+router.post(
+  "/",
+  // validateSignup,
+  async (req, res) => {
+    const { firstName, lastName, email, password, username } = req.body;
+    // if (email === db.User.email) {
+    //   return res.json({
+    //     message: "User already exists",
+    //     statusCode: 403,
+    //     errors: {
+    //       email: "User with that email already exists",
+    //     },
+    //   });
+    // }
+    if (!email) {
+      return res.json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          email: "Invalid email",
+        },
+      });
+    }
+    if (!username) {
+      return res.json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          email: "Username is required",
+        },
+      });
+    }
+    if (!firstName) {
+      return res.json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          email: "First name is required",
+        },
+      });
+    }
+    if (!lastName) {
+      return res.json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          email: "Last name is required",
+        },
+      });
+    }
+    const user = await User.signup({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      username: username,
+      password: password,
     });
-  }
-  if (User.username) {
-    return res.json({
-      message: "User already exists",
-      statusCode: 403,
-      errors: {
-        email: "User with that username already exists",
-      },
-    });
-  }
-  const user = await User.signup({
-    firstName,
-    lastName,
-    email,
-    username,
-    password,
-  });
 
-  await setTokenCookie(res, user);
+    await setTokenCookie(res, user);
 
-  return res.json({
-    user,
-  });
-});
+    return res.json(user.toSafeObject());
+  }
+);
 
 module.exports = router;
