@@ -11,10 +11,10 @@ const router = express.Router();
 const validateSignup = [
   check("firstName")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide capitalized first name"),
+    .withMessage("Please provide first name"),
   check("lastName")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide capitalized last name"),
+    .withMessage("Please provide last name"),
   check("email")
     .exists({ checkFalsy: true })
     .isEmail()
@@ -33,6 +33,24 @@ const validateSignup = [
 
 router.post("/", validateSignup, async (req, res) => {
   const { firstName, lastName, email, password, username } = req.body;
+  if (User.email) {
+    return res.json({
+      message: "User already exists",
+      statusCode: 403,
+      errors: {
+        email: "User with that email already exists",
+      },
+    });
+  }
+  if (User.username) {
+    return res.json({
+      message: "User already exists",
+      statusCode: 403,
+      errors: {
+        email: "User with that username already exists",
+      },
+    });
+  }
   const user = await User.signup({
     firstName,
     lastName,
