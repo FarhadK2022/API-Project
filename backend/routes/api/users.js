@@ -5,16 +5,17 @@ const { User } = require("../../db/models");
 
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+const db = require("../../db/models");
 
 const router = express.Router();
 
 const validateSignup = [
   check("firstName")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide capitalized first name"),
+    .withMessage("Please provide first name"),
   check("lastName")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide capitalized last name"),
+    .withMessage("Please provide last name"),
   check("email")
     .exists({ checkFalsy: true })
     .isEmail()
@@ -30,22 +31,84 @@ const validateSignup = [
     .withMessage("Password must be 6 characters or more."),
   handleValidationErrors,
 ];
+//Sign up a User
+router.post(
+  "/",
+  // validateSignup,
+  async (req, res) => {
+    const { firstName, lastName, email, password, username } = req.body;
+    const first = await User.findOne({
+      where: { email: email },
+    });
+    if (first) {
+      return res.json({
+        message: "User already exists",
+        statusCode: 403,
+        errors: {
+          email: "User with that email already exists",
+        },
+      });
+    }
+    const second = await User.findOne({
+      where: { username: username },
+    });
+    if (second) {
+      return res.json({
+        message: "User already exists",
+        statusCode: 403,
+        errors: {
+          email: "User with that username already exists",
+        },
+      });
+    }
+    if (!email) {
+      return res.json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          email: "Invalid email",
+        },
+      });
+    }
+    if (!username) {
+      return res.json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          email: "Username is required",
+        },
+      });
+    }
+    if (!firstName) {
+      return res.json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          email: "First name is required",
+        },
+      });
+    }
+    if (!lastName) {
+      return res.json({
+        message: "Validation error",
+        statusCode: 400,
+        errors: {
+          email: "Last name is required",
+        },
+      });
+    }
+    const user = await User.signup({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      username: username,
+      password: password,
+    });
 
-router.post("/", validateSignup, async (req, res) => {
-  const { firstName, lastName, email, password, username } = req.body;
-  const user = await User.signup({
-    firstName,
-    lastName,
-    email,
-    username,
-    password,
-  });
+    await setTokenCookie(res, user);
 
-  await setTokenCookie(res, user);
-
-  return res.json({
-    user,
-  });
-});
+    return res.json(user.toSafeObject());
+  }
+);
 
 module.exports = router;

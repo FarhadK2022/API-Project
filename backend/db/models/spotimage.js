@@ -4,6 +4,10 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class SpotImage extends Model {
+    toSafeObject() {
+      const { id, url, preview } = this;
+      return { id, url, preview };
+    }
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.

@@ -29,15 +29,15 @@ module.exports = (sequelize, DataTypes) => {
     review: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        isAlphanumeric: true
-      }
+
     },
     stars: {
       type:DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isNumeric: true
+        isNumeric: true,
+        min: 1,
+        max: 5
       }
     },
   }, {
