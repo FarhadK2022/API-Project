@@ -7,6 +7,7 @@ const {
   User,
   ReviewImage,
   Booking,
+  sequelize,
 } = require("../../db/models");
 const {
   setTokenCookie,
@@ -16,21 +17,93 @@ const {
 
 //Get all spots
 router.get("/", async (req, res) => {
-  const spots = await Spot.findAll();
+  let { page, size } = req.query;
 
-  return res.json(spots);
+  page = parseInt(page);
+  size = parseInt(size);
+
+  if (Number.isNaN(page)) page = 1;
+  if (Number.isNaN(size)) size = 20;
+
+  const spots = await Spot.findAll({
+    attributes: {
+      include: [
+        [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+        [sequelize.col("SpotImages.url"), "previewImage"],
+      ],
+    },
+    include: [
+      {
+        model: Review,
+        attributes: [],
+      },
+      { model: SpotImage, attributes: [] },
+    ],
+  });
+
+  // let spotsList = [];
+  // for (let i = 0; i < spots.length; i++) {
+  //   spotsList.push(spots[i]);
+  // }
+
+  // for (let i = 0; i < spotsList.length; i++) {
+  //   for (let j = 0; j < SpotImage.length; j++) {
+  //     if (SpotImage.preview === true) {
+  //       spots.previewImage = SpotImage.url;
+  //     }
+  //   }
+  // }
+
+  return res.json({ spots });
 });
 
 //Get all spots owned by the Current User***needs aggregate
 router.get("/current", restoreUser, async (req, res) => {
-  const spots = await Spot.findByPk(req.user.id);
+  const spots = await Spot.findByPk(req.user.id, {
+    attributes: {
+      include: [
+        [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+        [sequelize.col("SpotImages.url"), "previewImage"],
+      ],
+    },
+    include: [
+      {
+        model: Review,
+        attributes: [],
+      },
+      { model: SpotImage, attributes: [] },
+    ],
+  });
 
   return res.json(spots);
 });
 
-//Get details of a spot from an id*****needs aggregate
+//Get details of a spot from an id
 router.get("/:spotId", async (req, res) => {
-  const spot = await Spot.findByPk(req.params.spotId);
+  const spot = await Spot.findByPk(req.params.spotId, {
+    attributes: {
+      include: [
+        [sequelize.fn("COUNT", sequelize.col("Reviews.review")), "numReviews"],
+        [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
+
+        // [sequelize.col("SpotImages.url"), 'previewImage'],
+      ],
+    },
+    include: [
+      {
+        model: Review,
+        attributes: [],
+      },
+      {
+        model: SpotImage,
+        attributes: ["id", "url", "preview"],
+      },
+      {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
+      },
+    ],
+  });
   if (!spot) {
     return res.json({
       message: "Spot couldn't be found",
@@ -267,8 +340,8 @@ router.post("/:spotId/reviews", restoreUser, async (req, res) => {
 
 //Get all Bookings for a Spot based on the Spot's id
 router.get("/:spotId/bookings", restoreUser, async (req, res) => {
-  const booking = await Booking.findByPk(req.params.spotId)
-console.log(booking)
+  const booking = await Booking.findByPk(req.params.spotId);
+  console.log(booking);
   if (!booking) {
     return res.json({
       message: "Spot couldn't be found",
@@ -324,6 +397,5 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, async (req, res) => {
   });
   return res.json(newBooking);
 });
-
 
 module.exports = router;
