@@ -47,9 +47,8 @@ router.put("/:bookingId", restoreUser, requireAuth, async (req, res) => {
       statusCode: 403,
     });
   }
-  const oldBooking = Booking.findOne({
+  const oldBooking = await Booking.findOne({
     where: {
-      bookingId: req.params.bookingId,
       startDate: startDate,
       endDate: endDate,
     },

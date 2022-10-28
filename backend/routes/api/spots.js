@@ -54,10 +54,10 @@ router.get("/", async (req, res) => {
   //   }
   // }
 
-  return res.json({ spots });
+  return res.json({ spots, page, size });
 });
 
-//Get all spots owned by the Current User***needs aggregate
+//Get all spots owned by the Current User
 router.get("/current", restoreUser, async (req, res) => {
   const spots = await Spot.findByPk(req.user.id, {
     attributes: {
@@ -104,6 +104,7 @@ router.get("/:spotId", async (req, res) => {
       },
     ],
   });
+
   if (!spot) {
     return res.json({
       message: "Spot couldn't be found",
@@ -317,7 +318,7 @@ router.post("/:spotId/reviews", restoreUser, async (req, res) => {
       },
     });
   }
-  const oldReview = Review.findOne({
+  const oldReview = await Review.findOne({
     where: {
       userId: req.user.id,
       spotId: req.params.spotId,
@@ -340,8 +341,16 @@ router.post("/:spotId/reviews", restoreUser, async (req, res) => {
 
 //Get all Bookings for a Spot based on the Spot's id
 router.get("/:spotId/bookings", restoreUser, async (req, res) => {
-  const booking = await Booking.findByPk(req.params.spotId);
-  console.log(booking);
+  const booking = await Booking.findByPk(req.params.spotId, {
+    include: [
+      {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
+      },
+    ],
+  }
+    );
+  // console.log(booking);
   if (!booking) {
     return res.json({
       message: "Spot couldn't be found",
@@ -373,8 +382,9 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, async (req, res) => {
       },
     });
   }
-  const oldBooking = Booking.findOne({
+  const oldBooking = await Booking.findOne({
     where: {
+      userId: req.user.id,
       spotId: req.params.spotId,
       startDate: startDate,
       endDate: endDate,
@@ -391,6 +401,7 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, async (req, res) => {
     });
   }
   const newBooking = await Booking.create({
+    userId: req.user.id,
     spotId: req.params.spotId,
     startDate: startDate,
     endDate: endDate,
