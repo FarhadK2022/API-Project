@@ -4,6 +4,10 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
+    toSafeObject() {
+      const { id, userId, spotId, startDate, endDate } = this;
+      return { id, userId, spotId, startDate, endDate };
+    }
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.

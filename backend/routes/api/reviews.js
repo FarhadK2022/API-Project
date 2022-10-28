@@ -9,14 +9,14 @@ const {
 } = require("../../utils/auth");
 
 //Get all Reviews of the Current User***** needs aggragate
-router.get("/current", async (req, res) => {
-  const reviews = await Review.findByPk(req.user.id);
+router.get("/current", restoreUser, async (req, res) => {
+  const reviews = await Review.findAll({where: {userId: req.user.id}});
 
   return res.json(reviews);
 });
 
-//Add an Image to a Review based on the Review's id**** needs 404 error/auth
-router.post("/:reviewId/images", async (req, res) => {
+//Add an Image to a Review based on the Review's id
+router.post("/:reviewId/images", restoreUser, requireAuth, async (req, res) => {
   const { url } = req.body;
   const review = await Review.findByPk(req.params.reviewId);
 
@@ -33,8 +33,8 @@ router.post("/:reviewId/images", async (req, res) => {
   return res.json(newImage.toSafeObject())
 });
 
-//Edit a Review*** needs auth
-router.put('/:reviewId', async (req, res) => {
+//Edit a Review
+router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
   const { review, stars } = req.body
   const rev = await Review.findByPk(req.params.reviewId)
 
@@ -70,7 +70,7 @@ router.put('/:reviewId', async (req, res) => {
 })
 
 //Delete a Review
-router.delete('/:reviewId', async(req, res) => {
+router.delete('/:reviewId', restoreUser, requireAuth, async(req, res) => {
   const review = await Review.findByPk(req.params.reviewId)
   if (!review) {
     return res.json({

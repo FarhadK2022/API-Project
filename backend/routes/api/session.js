@@ -18,6 +18,7 @@ const validateLogin = [
 ];
 const router = express.Router();
 
+//Log in
 router.post(
   "/",
   // validateLogin,
@@ -63,11 +64,13 @@ router.post(
   }
 );
 
+//Log Out
 router.delete("/", (_req, res) => {
   res.clearCookie("token");
   return res.json({ message: "success" });
 });
 
+//Restore Session User
 router.get("/", restoreUser, (req, res) => {
   const { user } = req;
   if (user) {
