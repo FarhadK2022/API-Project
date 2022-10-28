@@ -83,8 +83,8 @@ router.get("/:spotId", async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId, {
     attributes: {
       include: [
-        [sequelize.fn("COUNT", sequelize.col("Reviews.review")), "numReviews"],
-        [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
+        // [sequelize.fn("COUNT", sequelize.col("Reviews.review")), "numReviews"],
+        // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
 
         // [sequelize.col("SpotImages.url"), 'previewImage'],
       ],
@@ -104,6 +104,7 @@ router.get("/:spotId", async (req, res) => {
       },
     ],
   });
+  console.log(spot)
 
   if (!spot) {
     return res.json({
