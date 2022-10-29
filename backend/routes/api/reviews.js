@@ -11,7 +11,7 @@ const {
 //Get all Reviews of the Current User***** needs aggragate
 router.get("/current", restoreUser, async (req, res) => {
   const reviews = await Review.findByPk(req.user.id);
-
+  res.status(200)
   return res.json(reviews);
 });
 
@@ -21,6 +21,7 @@ router.post("/:reviewId/images", restoreUser, requireAuth, async (req, res) => {
   const review = await Review.findByPk(req.params.reviewId);
 
   if (!review) {
+    res.status(404)
     return res.json({
       message: "Review couldn't be found",
       statusCode: 404,
@@ -30,6 +31,7 @@ router.post("/:reviewId/images", restoreUser, requireAuth, async (req, res) => {
     reviewId: req.params.reviewId,
     url: url
   })
+  res.status(200)
   return res.json(newImage.toSafeObject())
 });
 
@@ -39,12 +41,14 @@ router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
   const rev = await Review.findByPk(req.params.reviewId)
 
   if (!rev) {
+    res.status(404)
     return res.json({
       message: "Review couldn't be found",
       statusCode: 404,
     });
   }
   if (!review) {
+    res.status(400)
     return res.json({
       message: "Validation error",
       statusCode: 400,
@@ -54,6 +58,7 @@ router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!stars) {
+    res.status(400)
     return res.json({
       message: "Validation error",
       statusCode: 400,
@@ -65,7 +70,8 @@ router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
   await rev.update({
     review: review,
     stars: stars
-  })
+  });
+  res.status(200)
   return res.json(rev)
 })
 
@@ -73,12 +79,14 @@ router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
 router.delete('/:reviewId', restoreUser, requireAuth, async(req, res) => {
   const review = await Review.findByPk(req.params.reviewId)
   if (!review) {
+    res.status(404)
     return res.json({
       message: "Review couldn't be found",
       statusCode: 404,
     });
   }
-  await review.destroy()
+  await review.destroy();
+  res.status(200)
   return res.json({
     message: "Successfully deleted",
     statusCode: 200,
