@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { Review, ReviewImage } = require("../../db/models");
+const { Review, ReviewImage, User, Spot, SpotImage } = require("../../db/models");
 const {
   setTokenCookie,
   restoreUser,
@@ -38,8 +38,24 @@ router.get("/current", restoreUser, async (req, res) => {
       },
     ],
 });
+
+
+    let image = await SpotImage.findAll({where: {spotId: reviews.spotId}});
+
+          if (image){
+
+          if (image.preview === true) {
+            spot.dataValues.previewImage = image.url
+          }
+        }
+        if (!image) {
+
+          Spot.dataValues.previewImage = null
+        }
+  
+
   res.status(200)
-  return res.json(reviews);
+  return res.json({reviews});
 });
 
 //Add an Image to a Review based on the Review's id

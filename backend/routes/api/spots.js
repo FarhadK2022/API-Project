@@ -25,24 +25,45 @@ router.get("/", async (req, res) => {
   if (Number.isNaN(page)) page = 1;
   if (Number.isNaN(size)) size = 20;
 
-  const Spots = await Spot
-    .findAll
-    //   {
-    //   attributes: {
-    //     include: [
-    //       [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
-    //       [sequelize.col("SpotImages.url"), "previewImage"],
-    //     ],
-    //   },
-    //   include: [
-    //     {
-    //       model: Review,
-    //       attributes: [],
-    //     },
-    //     { model: SpotImage, attributes: [] },
-    //   ],
+
+  const spots = await Spot.findAll();
+
+  for (let spot of spots) {
+
+    let reviews = await Review.sum('stars', {where: {spotId: spot.id}})
+    let count = await Review.count({where: {spotId: spot.id}});
+    let images = await SpotImage.findOne({where: {spotId: spot.id}});
+
+    let averageStars = reviews / count
+    spot.dataValues.avgRating = averageStars
+
+    // if (images.preview === true) {
+    //   spot.dataValues.previewImage = images.url
+    // } else {
+    //   spot.dataValues.previewImage = null
     // }
-    ();
+    if (images){
+
+      if (images.preview === true) {
+        spot.dataValues.previewImage = images.url
+      }
+    }
+    if (!images) {
+
+      spot.dataValues.previewImage = null
+    }
+  }
+
+  //   {
+  //   attributes: {
+  //     include: [
+  //       [sequelize.col("SpotImages.url"), "previewImage"],
+  //     ],
+  //   },
+  //   include: [
+  //     { model: SpotImage, attributes: [] },
+  //   ],
+  // }
 
   // let spotsList = [];
   // for (let i = 0; i < spots.length; i++) {
@@ -51,19 +72,19 @@ router.get("/", async (req, res) => {
 
   // for (let i = 0; i < spotsList.length; i++) {
   //   for (let j = 0; j < SpotImage.length; j++) {
-  //     if (SpotImage.preview === true) {
+  //     if (SpotImage.preview === true && spotsList[i] === SpotImage.spotId) {
   //       spots.previewImage = SpotImage.url;
   //     }
   //   }
-  // }
+
   res.status(200);
-  res.json({ Spots, page, size });
+  res.json({ spots, page, size });
 });
 
 //Get all spots owned by the Current User
 router.get("/current", restoreUser, async (req, res) => {
-  const spots = await Spot.findByPk(
-    req.user.id
+  const spots = await Spot.findAll({where: {ownerId: req.user.id}});
+
     // , {
     //   attributes: {
     //     include: [
@@ -79,9 +100,32 @@ router.get("/current", restoreUser, async (req, res) => {
     //     { model: SpotImage, attributes: [] },
     //   ],
     // }
-  );
+  for (let spot of spots) {
+
+    let reviews = await Review.sum('stars', {where: {spotId: spot.id}})
+    let count = await Review.count({where: {spotId: spot.id}});
+    let image = await SpotImage.findOne({where: {spotId: spot.id}});
+
+    let averageStars = reviews / count
+    spot.dataValues.avgRating = averageStars
+
+
+        if (image){
+
+          if (image.preview === true) {
+            spot.dataValues.previewImage = image.url
+          }
+        }
+        if (!image) {
+
+          spot.dataValues.previewImage = null
+        }
+
+    }
+
+
   res.status(200);
-  return res.json(spots);
+  return res.json({spots});
 });
 
 //Get details of a spot from an id
@@ -109,7 +153,6 @@ router.get("/:spotId", async (req, res) => {
       },
     ],
   });
-
   if (!spot) {
     res.status(404);
     return res.json({
@@ -117,6 +160,14 @@ router.get("/:spotId", async (req, res) => {
       statusCode: 404,
     });
   }
+  let reviews = await Review.sum('stars', {where: {spotId: req.params.spotId}})
+    let count = await Review.count({where: {spotId: req.params.spotId}});
+    let image = await SpotImage.findOne({where: {spotId: req.params.spotId}});
+
+    let averageStars = reviews / count
+    spot.dataValues.avgStarRating = averageStars
+    spot.dataValues.numReviews = count
+
   res.status(200);
   return res.json(spot);
 });
@@ -487,7 +538,7 @@ router.get("/:spotId/bookings", restoreUser, async (req, res) => {
     });
   }
   res.status(200);
-  return res.json({booking});
+  return res.json({ booking });
 });
 
 //Create a Booking from a Spot based on the Spot's id
