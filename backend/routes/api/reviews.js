@@ -10,7 +10,34 @@ const {
 
 //Get all Reviews of the Current User***** needs aggragate
 router.get("/current", restoreUser, async (req, res) => {
-  const reviews = await Review.findByPk(req.user.id);
+  const reviews = await Review.findByPk(req.user.id, {
+    include: [
+      {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: Spot,
+        attributes: [
+          "id",
+          "ownerId",
+          "address",
+          "city",
+          "state",
+          "country",
+          "lat",
+          "lng",
+          "name",
+          "price",
+        ],
+
+      },
+      {
+        model: ReviewImage,
+        attributes: ["id", "url"],
+      },
+    ],
+});
   res.status(200)
   return res.json(reviews);
 });

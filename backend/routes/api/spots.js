@@ -487,7 +487,7 @@ router.get("/:spotId/bookings", restoreUser, async (req, res) => {
     });
   }
   res.status(200);
-  return res.json(booking);
+  return res.json({booking});
 });
 
 //Create a Booking from a Spot based on the Spot's id
