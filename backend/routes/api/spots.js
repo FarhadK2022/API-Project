@@ -15,7 +15,7 @@ const {
   requireAuth,
 } = require("../../utils/auth");
 
-//Get all spots
+//Get all spots**** Aggregates for avgReview and previewImage
 router.get("/", async (req, res) => {
   let { page, size } = req.query;
 
@@ -25,21 +25,24 @@ router.get("/", async (req, res) => {
   if (Number.isNaN(page)) page = 1;
   if (Number.isNaN(size)) size = 20;
 
-  const spots = await Spot.findAll({
-    attributes: {
-      include: [
-        [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
-        [sequelize.col("SpotImages.url"), "previewImage"],
-      ],
-    },
-    include: [
-      {
-        model: Review,
-        attributes: [],
-      },
-      { model: SpotImage, attributes: [] },
-    ],
-  });
+  const Spots = await Spot
+    .findAll
+    //   {
+    //   attributes: {
+    //     include: [
+    //       [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+    //       [sequelize.col("SpotImages.url"), "previewImage"],
+    //     ],
+    //   },
+    //   include: [
+    //     {
+    //       model: Review,
+    //       attributes: [],
+    //     },
+    //     { model: SpotImage, attributes: [] },
+    //   ],
+    // }
+    ();
 
   // let spotsList = [];
   // for (let i = 0; i < spots.length; i++) {
@@ -53,28 +56,31 @@ router.get("/", async (req, res) => {
   //     }
   //   }
   // }
-  res.status(200)
-  return res.json({ spots, page, size });
+  res.status(200);
+  res.json({ Spots, page, size });
 });
 
 //Get all spots owned by the Current User
 router.get("/current", restoreUser, async (req, res) => {
-  const spots = await Spot.findByPk(req.user.id, {
-    attributes: {
-      include: [
-        [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
-        [sequelize.col("SpotImages.url"), "previewImage"],
-      ],
-    },
-    include: [
-      {
-        model: Review,
-        attributes: [],
-      },
-      { model: SpotImage, attributes: [] },
-    ],
-  });
-  res.status(200)
+  const spots = await Spot.findByPk(
+    req.user.id
+    // , {
+    //   attributes: {
+    //     include: [
+    //       [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+    //       [sequelize.col("SpotImages.url"), "previewImage"],
+    //     ],
+    //   },
+    //   include: [
+    //     {
+    //       model: Review,
+    //       attributes: [],
+    //     },
+    //     { model: SpotImage, attributes: [] },
+    //   ],
+    // }
+  );
+  res.status(200);
   return res.json(spots);
 });
 
@@ -85,7 +91,6 @@ router.get("/:spotId", async (req, res) => {
       include: [
         // [sequelize.fn("COUNT", sequelize.col("Reviews.review")), "numReviews"],
         // [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
-
         // [sequelize.col("SpotImages.url"), 'previewImage'],
       ],
     },
@@ -105,15 +110,14 @@ router.get("/:spotId", async (req, res) => {
     ],
   });
 
-
   if (!spot) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Spot couldn't be found",
       statusCode: 404,
     });
   }
-  res.status(200)
+  res.status(200);
   return res.json(spot);
 });
 
@@ -122,7 +126,7 @@ router.post("/", restoreUser, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
   if (!address) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -132,7 +136,7 @@ router.post("/", restoreUser, async (req, res) => {
     });
   }
   if (!city) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -142,7 +146,7 @@ router.post("/", restoreUser, async (req, res) => {
     });
   }
   if (!state) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -152,7 +156,7 @@ router.post("/", restoreUser, async (req, res) => {
     });
   }
   if (!country) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -162,7 +166,7 @@ router.post("/", restoreUser, async (req, res) => {
     });
   }
   if (!lat || lat < -90 || lat > 90) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -172,7 +176,7 @@ router.post("/", restoreUser, async (req, res) => {
     });
   }
   if (!lng || lng < -180 || lng > 180) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -182,7 +186,7 @@ router.post("/", restoreUser, async (req, res) => {
     });
   }
   if (!name || name > 50) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -192,7 +196,7 @@ router.post("/", restoreUser, async (req, res) => {
     });
   }
   if (!description) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -202,7 +206,7 @@ router.post("/", restoreUser, async (req, res) => {
     });
   }
   if (!price) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -223,7 +227,7 @@ router.post("/", restoreUser, async (req, res) => {
     description: description,
     price: price,
   });
-  res.status(201)
+  res.status(201);
   return res.json(newSpot);
 });
 
@@ -233,7 +237,7 @@ router.post("/:spotId/images", restoreUser, requireAuth, async (req, res) => {
 
   const spot = await Spot.findByPk(req.params.spotId);
   if (!spot) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Spot couldn't be found",
       statusCode: 404,
@@ -245,7 +249,7 @@ router.post("/:spotId/images", restoreUser, requireAuth, async (req, res) => {
     url: url,
     preview: preview,
   });
-  res.status(200)
+  res.status(200);
   return res.json(newImage.toSafeObject());
 });
 
@@ -255,14 +259,14 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     req.body;
   const spot = await Spot.findByPk(req.params.spotId);
   if (!spot) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Spot couldn't be found",
       statusCode: 404,
     });
   }
   if (!address) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -272,7 +276,7 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!city) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -282,7 +286,7 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!state) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -292,7 +296,7 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!country) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -302,7 +306,7 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!lat || lat < -90 || lat > 90) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -312,7 +316,7 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!lng || lng < -180 || lng > 180) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -322,7 +326,7 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!name || name > 50) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -332,7 +336,7 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!description) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -342,7 +346,7 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!price) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation Error",
       statusCode: 400,
@@ -362,7 +366,7 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
     description: description,
     price: price,
   });
-  res.status(200)
+  res.status(200);
   return res.json(spot);
 });
 
@@ -370,14 +374,14 @@ router.put("/:spotId", restoreUser, requireAuth, async (req, res) => {
 router.delete("/:spotId", restoreUser, requireAuth, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   if (!spot) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Spot couldn't be found",
       statusCode: 404,
     });
   }
   await spot.destroy();
-  res.status(200)
+  res.status(200);
   return res.json({
     message: "Successfully deleted",
     statusCode: 200,
@@ -387,16 +391,25 @@ router.delete("/:spotId", restoreUser, requireAuth, async (req, res) => {
 //Get all Reviews by a SpotId**** needs clean up on eager loading
 router.get("/:spotId/reviews", async (req, res) => {
   const spot = await Review.findByPk(req.params.spotId, {
-    include: [User, ReviewImage],
+    include: [
+      {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: ReviewImage,
+        attributes: ["id", "url"],
+      },
+    ],
   });
   if (!spot) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Spot couldn't be found",
       statusCode: 404,
     });
   }
-  res.status(200)
+  res.status(200);
   return res.json(spot);
 });
 
@@ -406,14 +419,14 @@ router.post("/:spotId/reviews", restoreUser, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
 
   if (!spot) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Spot couldn't be found",
       statusCode: 404,
     });
   }
   if (!review) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation error",
       statusCode: 400,
@@ -423,7 +436,7 @@ router.post("/:spotId/reviews", restoreUser, async (req, res) => {
     });
   }
   if (!stars) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation error",
       statusCode: 400,
@@ -439,7 +452,7 @@ router.post("/:spotId/reviews", restoreUser, async (req, res) => {
     },
   });
   if (oldReview) {
-    res.status(403)
+    res.status(403);
     return res.json({
       message: "User already has a review for this spot",
       statusCode: 403,
@@ -451,7 +464,7 @@ router.post("/:spotId/reviews", restoreUser, async (req, res) => {
     review: review,
     stars: stars,
   });
-  res.status(201)
+  res.status(201);
   return res.json(newReview);
 });
 
@@ -464,17 +477,16 @@ router.get("/:spotId/bookings", restoreUser, async (req, res) => {
         attributes: ["id", "firstName", "lastName"],
       },
     ],
-  }
-    );
+  });
   // console.log(booking);
   if (!booking) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Spot couldn't be found",
       statusCode: 404,
     });
   }
-  res.status(200)
+  res.status(200);
   return res.json(booking);
 });
 
@@ -484,7 +496,7 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
 
   if (!spot) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Spot couldn't be found",
       statusCode: 404,
@@ -493,7 +505,7 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, async (req, res) => {
   const date1 = Date.parse(startDate);
   const date2 = Date.parse(endDate);
   if (date1 > date2) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation error",
       statusCode: 400,
@@ -511,7 +523,7 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, async (req, res) => {
     },
   });
   if (oldBooking) {
-    res.status(403)
+    res.status(403);
     return res.json({
       message: "Sorry, this spot is already booked for the specified dates",
       statusCode: 403,
@@ -527,7 +539,7 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, async (req, res) => {
     startDate: startDate,
     endDate: endDate,
   });
-  res.status(200)
+  res.status(200);
   return res.json(newBooking);
 });
 

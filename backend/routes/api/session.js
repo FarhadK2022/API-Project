@@ -26,7 +26,7 @@ router.post(
     const { credential, password } = req.body;
 
     if (!credential) {
-      res.status(400)
+      res.status(400);
       return res.json({
         message: "Validation error",
         statusCode: 400,
@@ -36,7 +36,7 @@ router.post(
       });
     }
     if (!password) {
-      res.status(400)
+      res.status(400);
       return res.json({
         message: "Validation error",
         statusCode: 400,
@@ -52,7 +52,7 @@ router.post(
       // err.status = 401;
       // err.title = 'Login failed';
       // err.errors = ['The provided credentials were invalid.'];
-      res.status(401)
+      res.status(401);
       return res.json({
         message: "Invalid credentials",
         statusCode: 401,
@@ -60,10 +60,8 @@ router.post(
     }
 
     await setTokenCookie(res, user);
-    res.status(200)
-    return res.json(
-      user.toSafeObject()
-    );
+    res.status(200);
+    return res.json(user.toSafeObject());
   }
 );
 
@@ -77,9 +75,7 @@ router.delete("/", (_req, res) => {
 router.get("/", restoreUser, (req, res) => {
   const { user } = req;
   if (user) {
-    return res.json({
-      user: user.toSafeObject(),
-    });
+    return res.json(user.toSafeObject());
   } else return res.json({});
 });
 
