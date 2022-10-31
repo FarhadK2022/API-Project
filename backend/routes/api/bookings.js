@@ -7,7 +7,7 @@ const {
 } = require("../../utils/auth");
 const { Booking, User, Spot, SpotImage } = require("../../db/models");
 
-//Get all of the Current User's Bookings**** needs previewImage
+//Get all of the Current User's Bookings
 router.get("/current", restoreUser, async (req, res) => {
   const Bookings = await Booking.findAll({
     where: {
@@ -32,18 +32,19 @@ router.get("/current", restoreUser, async (req, res) => {
     ],
   });
   for (let booking of Bookings){
-
-    const images = await SpotImage.findAll({where: {spotId: booking.spotId}});
+    const spot = await Spot.findOne({where: {id: booking.spotId}})
+    console.log(spot)
+    const images = await SpotImage.findAll({where: {spotId: spot.id}});
         for (let image of images){
 
           if (image){
 
           if (image.preview === true) {
-            booking.dataValues.previewImage = image.url
+            spot.previewImage = image.url
           }
           if (image.preview === false) {
 
-            booking.dataValues.previewImage = null
+            spot.previewImage = null
           }
         }
       }
@@ -138,12 +139,20 @@ router.delete("/:bookingId", restoreUser, requireAuth, async (req, res) => {
       statusCode: 403,
     });
   }
-  await booking.destroy();
-  res.status(200);
-  return res.json({
-    message: "Successfully deleted",
-    statusCode: 200,
-  });
+  const spot = await SpotImage.findAll()
+  if (booking.userId === req.user.id && spot.ownerId === req.user.id ){
+
+  }
+  if (booking.userId === req.user.id) {
+
+    await booking.destroy();
+    res.status(200);
+    return res.json({
+      message: "Successfully deleted",
+      statusCode: 200,
+    });
+  }
+
 });
 
 module.exports = router;

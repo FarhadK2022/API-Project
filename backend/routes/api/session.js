@@ -48,10 +48,6 @@ router.post(
     const user = await User.login({ credential, password });
 
     if (!user) {
-      // const err = new Error('Login failed');
-      // err.status = 401;
-      // err.title = 'Login failed';
-      // err.errors = ['The provided credentials were invalid.'];
       res.status(401);
       return res.json({
         message: "Invalid credentials",

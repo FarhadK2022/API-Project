@@ -31,17 +31,18 @@ const validateSignup = [
     .withMessage("Password must be 6 characters or more."),
   handleValidationErrors,
 ];
+
 //Sign up a User
 router.post(
   "/",
-  // validateSignup,
+
   async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;
     const first = await User.findOne({
       where: { email: email },
     });
     if (first) {
-      res.status(403)
+      res.status(403);
       return res.json({
         message: "User already exists",
         statusCode: 403,
@@ -54,7 +55,7 @@ router.post(
       where: { username: username },
     });
     if (second) {
-      res.status(403)
+      res.status(403);
       return res.json({
         message: "User already exists",
         statusCode: 403,
@@ -64,7 +65,7 @@ router.post(
       });
     }
     if (!email) {
-      res.status(400)
+      res.status(400);
       return res.json({
         message: "Validation error",
         statusCode: 400,
@@ -74,7 +75,7 @@ router.post(
       });
     }
     if (!username) {
-      res.status(400)
+      res.status(400);
       return res.json({
         message: "Validation error",
         statusCode: 400,
@@ -84,7 +85,7 @@ router.post(
       });
     }
     if (!firstName) {
-      res.status(400)
+      res.status(400);
       return res.json({
         message: "Validation error",
         statusCode: 400,
@@ -94,7 +95,7 @@ router.post(
       });
     }
     if (!lastName) {
-      res.status(400)
+      res.status(400);
       return res.json({
         message: "Validation error",
         statusCode: 400,
@@ -112,7 +113,7 @@ router.post(
     });
 
     await setTokenCookie(res, user);
-    res.status(200)
+    res.status(200);
     return res.json(user.toSafeObject());
   }
 );

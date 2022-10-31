@@ -16,7 +16,8 @@ const {
 
 //Get all Reviews of the Current User***** needs aggragate
 router.get("/current", restoreUser, async (req, res) => {
-  const Reviews = await Review.findAll({where: {userId: req.user.id},
+  const Reviews = await Review.findAll({
+    where: { userId: req.user.id },
     include: [
       {
         model: User,
@@ -35,7 +36,6 @@ router.get("/current", restoreUser, async (req, res) => {
           "lng",
           "name",
           "price",
-          
         ],
       },
       {
@@ -45,9 +45,10 @@ router.get("/current", restoreUser, async (req, res) => {
     ],
   });
 
-  for (let review of Reviews){
-
-    const images = await SpotImage.findAll({ where: { spotId: review.spotId } });
+  for (let review of Reviews) {
+    const images = await SpotImage.findAll({
+      where: { spotId: review.spotId },
+    });
     for (let image of images) {
       if (image) {
         if (image.preview === true) {
@@ -59,7 +60,6 @@ router.get("/current", restoreUser, async (req, res) => {
       }
     }
   }
-
 
   res.status(200);
   return res.json({ Reviews });
@@ -77,12 +77,20 @@ router.post("/:reviewId/images", restoreUser, requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-  const newImage = await ReviewImage.create({
-    reviewId: req.params.reviewId,
-    url: url,
-  });
-  res.status(200);
-  return res.json(newImage.toSafeObject());
+  if (review.userId === req.user.id) {
+    const newImage = await ReviewImage.create({
+      reviewId: req.params.reviewId,
+      url: url,
+    });
+    res.status(200);
+    return res.json(newImage.toSafeObject());
+  } else {
+    res.status(403);
+    return res.json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
 });
 
 //Edit a Review
@@ -117,12 +125,20 @@ router.put("/:reviewId", restoreUser, requireAuth, async (req, res) => {
       },
     });
   }
-  await rev.update({
-    review: review,
-    stars: stars,
-  });
-  res.status(200);
-  return res.json(rev);
+  if (rev.userId === req.user.id) {
+    await rev.update({
+      review: review,
+      stars: stars,
+    });
+    res.status(200);
+    return res.json(rev);
+  } else {
+    res.status(403);
+    return res.json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
 });
 
 //Delete a Review
@@ -135,11 +151,19 @@ router.delete("/:reviewId", restoreUser, requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-  await review.destroy();
-  res.status(200);
-  return res.json({
-    message: "Successfully deleted",
-    statusCode: 200,
-  });
+  if (review.userId === req.user.id) {
+    await review.destroy();
+    res.status(200);
+    return res.json({
+      message: "Successfully deleted",
+      statusCode: 200,
+    });
+  } else {
+    res.status(403);
+    return res.json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
 });
 module.exports = router;
