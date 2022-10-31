@@ -559,7 +559,8 @@ router.get("/:spotId/reviews", async (req, res) => {
     ]
 
   });
-  if (!Reviews) {
+  if (Reviews.length === 0) {
+
     res.status(404);
     return res.json({
       message: "Spot couldn't be found",
@@ -637,7 +638,7 @@ router.get("/:spotId/bookings", restoreUser, async (req, res) => {
     ]
 
   });
-  if (!Bookings) {
+  if (Bookings.length === 0) {
     res.status(404);
     return res.json({
       message: "Spot couldn't be found",

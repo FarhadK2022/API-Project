@@ -41,10 +41,10 @@ router.get("/current", restoreUser, async (req, res) => {
           if (image.preview === true) {
             booking.dataValues.previewImage = image.url
           }
-        }
-        if (!image) {
+          if (image.preview === false) {
 
-          booking.spot.dataValues.previewImage = null
+            booking.dataValues.previewImage = null
+          }
         }
       }
   }
