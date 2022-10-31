@@ -31,6 +31,23 @@ router.get("/current", restoreUser, async (req, res) => {
       },
     ],
   });
+  for (let booking of Bookings){
+
+    const images = await SpotImage.findAll({where: {spotId: booking.spotId}});
+        for (let image of images){
+
+          if (image){
+
+          if (image.preview === true) {
+            booking.dataValues.previewImage = image.url
+          }
+        }
+        if (!image) {
+
+          booking.spot.dataValues.previewImage = null
+        }
+      }
+  }
   res.status(200);
   return res.json({ Bookings });
 });
@@ -66,6 +83,7 @@ router.put("/:bookingId", restoreUser, requireAuth, async (req, res) => {
       statusCode: 403,
     });
   }
+  if (booking.userId === req.user.id) {
   const oldBooking = await Booking.findOne({
     where: {
       startDate: startDate,
@@ -84,12 +102,19 @@ router.put("/:bookingId", restoreUser, requireAuth, async (req, res) => {
     });
   }
 
-  await booking.update({
-    startDate: startDate,
-    endDate: endDate,
-  });
-  res.status(200);
-  return res.json(booking);
+    await booking.update({
+      startDate: startDate,
+      endDate: endDate,
+    });
+    res.status(200);
+    return res.json(booking);
+  } else {
+    res.status(403);
+    return res.json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
 });
 
 //Delete a booking

@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const { Review, ReviewImage, User, Spot, SpotImage } = require("../../db/models");
+const {
+  Review,
+  ReviewImage,
+  User,
+  Spot,
+  SpotImage,
+} = require("../../db/models");
 const {
   setTokenCookie,
   restoreUser,
@@ -10,7 +16,7 @@ const {
 
 //Get all Reviews of the Current User***** needs aggragate
 router.get("/current", restoreUser, async (req, res) => {
-  const reviews = await Review.findByPk(req.user.id, {
+  const Reviews = await Review.findAll({where: {userId: req.user.id},
     include: [
       {
         model: User,
@@ -29,33 +35,34 @@ router.get("/current", restoreUser, async (req, res) => {
           "lng",
           "name",
           "price",
+          
         ],
-
       },
       {
         model: ReviewImage,
         attributes: ["id", "url"],
       },
     ],
-});
+  });
 
+  for (let review of Reviews){
 
-    let image = await SpotImage.findAll({where: {spotId: reviews.spotId}});
-
-          if (image){
-
-          if (image.preview === true) {
-            spot.dataValues.previewImage = image.url
-          }
+    const images = await SpotImage.findAll({ where: { spotId: review.spotId } });
+    for (let image of images) {
+      if (image) {
+        if (image.preview === true) {
+          review.dataValues.previewImage = image.url;
         }
-        if (!image) {
+      }
+      if (!image) {
+        review.dataValues.previewImage = null;
+      }
+    }
+  }
 
-          Spot.dataValues.previewImage = null
-        }
-  
 
-  res.status(200)
-  return res.json({reviews});
+  res.status(200);
+  return res.json({ Reviews });
 });
 
 //Add an Image to a Review based on the Review's id
@@ -64,7 +71,7 @@ router.post("/:reviewId/images", restoreUser, requireAuth, async (req, res) => {
   const review = await Review.findByPk(req.params.reviewId);
 
   if (!review) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Review couldn't be found",
       statusCode: 404,
@@ -72,26 +79,26 @@ router.post("/:reviewId/images", restoreUser, requireAuth, async (req, res) => {
   }
   const newImage = await ReviewImage.create({
     reviewId: req.params.reviewId,
-    url: url
-  })
-  res.status(200)
-  return res.json(newImage.toSafeObject())
+    url: url,
+  });
+  res.status(200);
+  return res.json(newImage.toSafeObject());
 });
 
 //Edit a Review
-router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
-  const { review, stars } = req.body
-  const rev = await Review.findByPk(req.params.reviewId)
+router.put("/:reviewId", restoreUser, requireAuth, async (req, res) => {
+  const { review, stars } = req.body;
+  const rev = await Review.findByPk(req.params.reviewId);
 
   if (!rev) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Review couldn't be found",
       statusCode: 404,
     });
   }
   if (!review) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation error",
       statusCode: 400,
@@ -101,7 +108,7 @@ router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (!stars) {
-    res.status(400)
+    res.status(400);
     return res.json({
       message: "Validation error",
       statusCode: 400,
@@ -112,27 +119,27 @@ router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
   }
   await rev.update({
     review: review,
-    stars: stars
+    stars: stars,
   });
-  res.status(200)
-  return res.json(rev)
-})
+  res.status(200);
+  return res.json(rev);
+});
 
 //Delete a Review
-router.delete('/:reviewId', restoreUser, requireAuth, async(req, res) => {
-  const review = await Review.findByPk(req.params.reviewId)
+router.delete("/:reviewId", restoreUser, requireAuth, async (req, res) => {
+  const review = await Review.findByPk(req.params.reviewId);
   if (!review) {
-    res.status(404)
+    res.status(404);
     return res.json({
       message: "Review couldn't be found",
       statusCode: 404,
     });
   }
   await review.destroy();
-  res.status(200)
+  res.status(200);
   return res.json({
     message: "Successfully deleted",
     statusCode: 200,
   });
-})
+});
 module.exports = router;
