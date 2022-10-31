@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { SpotImage } = require("../../db/models");
+const { SpotImage, Spot } = require("../../db/models");
 const {
   setTokenCookie,
   restoreUser,
@@ -17,15 +17,13 @@ router.delete("/:imageId", restoreUser, requireAuth, async (req, res) => {
       statusCode: 404,
     });
   }
-  const spot = await SpotImage.findAll();
-  if (image.spotId === spot.id && spot.ownerId === req.user.id) {
-    await image.destroy();
-    res.status(200);
-    return res.json({
-      message: "Successfully deleted",
-      statusCode: 200,
-    });
-  }
+
+  await image.destroy();
+  res.status(200);
+  return res.json({
+    message: "Successfully deleted",
+    statusCode: 200,
+  });
 });
 
 module.exports = router;

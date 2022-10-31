@@ -60,7 +60,7 @@ router.get("/current", restoreUser, async (req, res) => {
   }
 
   res.status(200);
-  return res.json({ Reviews, Spot });
+  return res.json({ Reviews });
 });
 
 //Add an Image to a Review based on the Review's id
