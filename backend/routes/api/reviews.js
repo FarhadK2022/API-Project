@@ -14,7 +14,7 @@ const {
   requireAuth,
 } = require("../../utils/auth");
 
-//Get all Reviews of the Current User***** needs aggragate
+//Get all Reviews of the Current User
 router.get("/current", restoreUser, async (req, res) => {
   const Reviews = await Review.findAll({
     where: { userId: req.user.id },
