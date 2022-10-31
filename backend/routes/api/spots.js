@@ -40,10 +40,9 @@ router.get("/", async (req, res) => {
     } else {
       spot.dataValues.previewImage = null;
     }
-
-    res.status(200);
-    res.json({ Spots, page, size });
   }
+  res.status(200);
+  res.json({ Spots, page, size });
 });
 
 //Get all spots owned by the Current User

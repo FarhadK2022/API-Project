@@ -31,23 +31,20 @@ router.get("/current", restoreUser, async (req, res) => {
       },
     ],
   });
-  for (let booking of Bookings){
-    const spot = await Spot.findOne({where: {id: booking.spotId}})
-    console.log(spot)
-    const images = await SpotImage.findAll({where: {spotId: spot.id}});
-        for (let image of images){
-
-          if (image){
-
-          if (image.preview === true) {
-            spot.previewImage = image.url
-          }
-          if (image.preview === false) {
-
-            spot.previewImage = null
-          }
+  for (let booking of Bookings) {
+    const images = await SpotImage.findAll({
+      where: { spotId: booking.spotId },
+    });
+    for (let image of images) {
+      if (image) {
+        if (image.preview === true) {
+          booking.Spot.dataValues.previewImage = image.url;
+        }
+        if (image.preview === false) {
+          booking.Spot.dataValues.previewImage = null;
         }
       }
+    }
   }
   res.status(200);
   return res.json({ Bookings });
@@ -85,23 +82,23 @@ router.put("/:bookingId", restoreUser, requireAuth, async (req, res) => {
     });
   }
   if (booking.userId === req.user.id) {
-  const oldBooking = await Booking.findOne({
-    where: {
-      startDate: startDate,
-      endDate: endDate,
-    },
-  });
-  if (oldBooking) {
-    res.status(403);
-    return res.json({
-      message: "Sorry, this spot is already booked for the specified dates",
-      statusCode: 403,
-      errors: {
-        startDate: "Start date conflicts with an existing booking",
-        endDate: "End date conflicts with an existing booking",
+    const oldBooking = await Booking.findOne({
+      where: {
+        startDate: startDate,
+        endDate: endDate,
       },
     });
-  }
+    if (oldBooking) {
+      res.status(403);
+      return res.json({
+        message: "Sorry, this spot is already booked for the specified dates",
+        statusCode: 403,
+        errors: {
+          startDate: "Start date conflicts with an existing booking",
+          endDate: "End date conflicts with an existing booking",
+        },
+      });
+    }
 
     await booking.update({
       startDate: startDate,
@@ -139,12 +136,10 @@ router.delete("/:bookingId", restoreUser, requireAuth, async (req, res) => {
       statusCode: 403,
     });
   }
-  const spot = await SpotImage.findAll()
-  if (booking.userId === req.user.id && spot.ownerId === req.user.id ){
-
+  const spot = await SpotImage.findAll();
+  if (booking.userId === req.user.id && spot.ownerId === req.user.id) {
   }
   if (booking.userId === req.user.id) {
-
     await booking.destroy();
     res.status(200);
     return res.json({
@@ -152,7 +147,6 @@ router.delete("/:bookingId", restoreUser, requireAuth, async (req, res) => {
       statusCode: 200,
     });
   }
-
 });
 
 module.exports = router;

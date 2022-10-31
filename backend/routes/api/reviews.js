@@ -50,19 +50,17 @@ router.get("/current", restoreUser, async (req, res) => {
       where: { spotId: review.spotId },
     });
     for (let image of images) {
-      if (image) {
-        if (image.preview === true) {
-          review.dataValues.previewImage = image.url;
-        }
-      }
       if (!image) {
-        review.dataValues.previewImage = null;
+        review.Spot.dataValues.previewImage = null;
+      }
+      if (image.preview === true) {
+        review.Spot.dataValues.previewImage = image.url;
       }
     }
   }
 
   res.status(200);
-  return res.json({ Reviews });
+  return res.json({ Reviews, Spot });
 });
 
 //Add an Image to a Review based on the Review's id
