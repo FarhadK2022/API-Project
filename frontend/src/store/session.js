@@ -2,6 +2,7 @@ import { csrfFetch } from './csrf';
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const CREATE_SPOT = 'session/createSpot'
 
 const setUser = (user) => {
   return {
@@ -15,6 +16,13 @@ const removeUser = () => {
     type: REMOVE_USER,
   };
 };
+
+const createSpot = (spot) => {
+  return {
+    type: CREATE_SPOT,
+    payload: spot,
+  };
+}
 
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
@@ -60,6 +68,20 @@ export const signup = (user) => async (dispatch) => {
   return response;
 };
 
+export const newSpot = (user, spot) => async (dispatch) => {
+  const { ownerId } = user;
+  const { address, city, state, country, name, description, price } = spot
+  const response = await csrfFetch("/api/spots", {
+    method: "POST",
+    body: JSON.stringify({
+      ownerId, address, city, state, country, name, description, price
+    }),
+  });
+  const data = await response.json();
+  dispatch(createSpot(data.spot));
+  return response;
+};
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
@@ -73,6 +95,10 @@ const sessionReducer = (state = initialState, action) => {
       newState = Object.assign({}, state);
       newState.user = null;
       return newState;
+    case CREATE_SPOT:
+      newState = Object.assign({}, state);
+      newState.spot = action.payload;
+      return newState
     default:
       return state;
   }
