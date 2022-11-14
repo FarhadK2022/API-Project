@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import { NavLink } from "react-router-dom";
+import GetAllSpotsPage from "./components/Spots";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,9 +21,9 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          {/* <Route path="/signup">
-            <SignupFormPage />
-          </Route> */}
+          <Route path="/">
+            <GetAllSpotsPage />
+          </Route>
         </Switch>
       )}
     </>
