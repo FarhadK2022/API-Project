@@ -3,6 +3,7 @@
   width: 500px;
   padding: 25px;
   border-radius: 15px;
+
 }
 
 .button {
@@ -11,6 +12,7 @@
   color: white;
   background-color: #ff385c;
   margin-top: 15px;
+ 
 }
 
 .inputField {

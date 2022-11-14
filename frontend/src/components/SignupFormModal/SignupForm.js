@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 
 function SignupForm() {
   const dispatch = useDispatch();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +14,7 @@ function SignupForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.signup({ username, email, password })).catch(
+    return dispatch(sessionActions.signup({ firstName, lastName, username, email, password })).catch(
       async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
@@ -29,6 +31,26 @@ function SignupForm() {
           <li key={idx}>{error}</li>
         ))}
       </ul>
+      <label>
+        First Name
+        <input
+        className="inputField"
+          type="text"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Last Name
+        <input
+        className="inputField"
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+        />
+      </label>
       <label>
         Username
         <input

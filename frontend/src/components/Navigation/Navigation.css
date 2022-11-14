@@ -1,0 +1,9 @@
+ul {
+  display: grid;
+  justify-content:right;
+}
+
+li {
+list-style-type: none;
+}
+

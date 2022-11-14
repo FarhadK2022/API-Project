@@ -1,1 +1,8 @@
 /* TODO Add site wide styles */
+h1{
+  color: #ff385c;
+}
+
+.active{
+  text-decoration: none;
+}
