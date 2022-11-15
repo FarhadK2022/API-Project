@@ -2,13 +2,13 @@ ul {
   display: flex;
 }
 
-li.cards {
+.card li{
   display: flex;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   grid-gap: 20px;
 }
 
-li.card {
+.card li {
   display: flex;
   grid-template-rows: max-content 200px 1fr;
 }

@@ -22,7 +22,7 @@ function GetAllSpotsPage() {
       <>
       <h1>Spots</h1>
       <ul className="spots-list">
-      
+
 
         {spotsObj.map((spot) =>
         <li className="card" key={spot.id}>
