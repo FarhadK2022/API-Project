@@ -3,7 +3,12 @@ ul {
   justify-content:right;
 }
 
-li {
-list-style-type: none;
+.user-menu{
+  display: grid;
+ 
 }
 
+li {
+  display: grid;
+  list-style-type: none;
+  }
