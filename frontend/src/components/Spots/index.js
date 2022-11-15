@@ -25,7 +25,7 @@ function GetAllSpotsPage() {
       <div className="spots-list">
         {spotsObj.map((spot) => (
           <button className="card" key={spot.id}>
-            <image>{spot.previewImage}</image>
+            <img>{spot.previewImage}</img>
             <h3>{spot.name}</h3>
             <p>{spot.adress}</p>
             <p>{spot.city}</p>
@@ -43,4 +43,6 @@ function GetAllSpotsPage() {
 
 export default GetAllSpotsPage;
 
-{/* <Link key={spot.id} to={`/locations/${spot.id}`}></Link> */}
+{
+  /* <Link key={spot.id} to={`/locations/${spot.id}`}></Link> */
+}

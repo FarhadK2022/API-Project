@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
+import { useDispatch } from "react-redux";
+import * as sessionActions from "../../store/session";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 
-function ProfileButton( {user} ) {
+function ProfileButton({ user, setLogin, setShowModal }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -20,7 +20,7 @@ function ProfileButton( {user} ) {
       setShowMenu(false);
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
@@ -35,14 +35,30 @@ function ProfileButton( {user} ) {
       <button className="user-menu" onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
-      {showMenu && (
-        <ul className="profile-dropdown">
+      {showMenu && ( user ?
+        (<ul className="profile-dropdown">
           <li>{user.username}</li>
           <li>{user.email}</li>
           <li>
-            <button className='button' onClick={logout}>Log Out</button>
+            <button className="button" onClick={logout}>
+              Log Out
+            </button>
           </li>
-        </ul>
+        </ul>) :
+        (<ul className="profile-dropdown">
+          <li>
+            <button onClick={() => {
+              setLogin(true)
+              setShowModal(true)
+            }}>Log In</button>
+          </li>
+          <li>
+            <button onClick={() => {
+              setLogin(false)
+              setShowModal(true)
+            }}>Sign Up</button>
+          </li>
+        </ul>)
       )}
     </>
   );

@@ -24,7 +24,6 @@ function App() {
           <Route path="/">
             <GetAllSpotsPage />
           </Route>
-
         </Switch>
       )}
     </>

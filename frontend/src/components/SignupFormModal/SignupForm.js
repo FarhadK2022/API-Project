@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 
-function SignupForm() {
+function SignupForm({setShowModal}) {
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -14,12 +14,13 @@ function SignupForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.signup({ firstName, lastName, username, email, password })).catch(
-      async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      }
-    );
+    return dispatch(
+      sessionActions.signup({ firstName, lastName, username, email, password })
+    ).then(() => setShowModal(false))
+    .catch(async (res) => {
+      const data = await res.json();
+      if (data && data.errors) setErrors(data.errors);
+    });
   };
 
   return (
@@ -34,7 +35,7 @@ function SignupForm() {
       <label>
         First Name
         <input
-        className="inputField"
+          className="inputField"
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
@@ -44,7 +45,7 @@ function SignupForm() {
       <label>
         Last Name
         <input
-        className="inputField"
+          className="inputField"
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -54,7 +55,7 @@ function SignupForm() {
       <label>
         Username
         <input
-        className="inputField"
+          className="inputField"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -64,7 +65,7 @@ function SignupForm() {
       <label>
         Email
         <input
-        className="inputField"
+          className="inputField"
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -74,14 +75,16 @@ function SignupForm() {
       <label>
         Password
         <input
-        className="inputField"
+          className="inputField"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
       </label>
-      <button className="button" type="submit">Sign Up</button>
+      <button className="button" type="submit">
+        Sign Up
+      </button>
     </form>
   );
 }

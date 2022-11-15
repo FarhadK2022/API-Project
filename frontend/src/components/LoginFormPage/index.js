@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./LoginForm.css";
 
-function LoginFormPage() {
+function LoginFormPage({setShowModal}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [credential, setCredential] = useState("");
@@ -16,7 +16,9 @@ function LoginFormPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.login({ credential, password })).catch(
+    return dispatch(sessionActions.login({ credential, password }))
+    .then(() => setShowModal(false))
+    .catch(
       async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);

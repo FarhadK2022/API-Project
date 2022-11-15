@@ -13,10 +13,10 @@ const getAllSpots = (spots) => {
   };
 };
 
-const getSpot = (spotId) => {
+const getSpot = (spot) => {
   return {
     type: GET_SPOT,
-    spotId,
+    spot,
   };
 };
 
@@ -27,10 +27,10 @@ const createSpot = (spot) => {
   };
 };
 
-const editSpot = (spotId) => {
+const editSpot = (spot) => {
   return {
     type: EDIT_SPOT,
-    spotId,
+    spot,
   };
 };
 
@@ -52,7 +52,7 @@ export const allSpotsThunk = () => async (dispatch) => {
 };
 
 export const spotThunk = (spot) => async (dispatch) => {
-  const {spotId} = spot.id
+  const { spotId } = spot.id;
   const response = await csrfFetch("/api/spots/:spotId", {
     method: "GET",
   });
@@ -64,12 +64,21 @@ export const spotThunk = (spot) => async (dispatch) => {
 };
 
 export const createSpotThunk = (spot) => async (dispatch) => {
-  const { address, city, state, country, lat, lng, name, description, price } = spot
+  const { address, city, state, country, lat, lng, name, description, price } =
+    spot;
   const response = await csrfFetch("/api/spots", {
     method: "POST",
     body: JSON.stringify({
-      address, city, state, country, lat, lng, name, description, price
-    })
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    }),
   });
   if (response.ok) {
     const data = await response.json();
@@ -78,14 +87,23 @@ export const createSpotThunk = (spot) => async (dispatch) => {
   return response;
 };
 
-export const editSpotThunk = (spot) => async (dispatch) => {
-  const {spotId} = spot.id
-  const { address, city, state, country, lat, lng, name, description, price } = spot
+export const editSpotThunk = (spotId, spot) => async (dispatch) => {
+  const  spotId  = spot.id;
+  const { address, city, state, country, lat, lng, name, description, price } =
+    spot;
   const response = await csrfFetch("/api/spots/:spotId", {
     method: "PUT",
     body: JSON.stringify({
-      address, city, state, country, lat, lng, name, description, price
-    })
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name,
+      description,
+      price,
+    }),
   });
   if (response.ok) {
     const data = await response.json();
@@ -94,8 +112,8 @@ export const editSpotThunk = (spot) => async (dispatch) => {
   return response;
 };
 
-export const deleteSpotThunk = (spot) => async (dispatch) => {
-  const {spotId} = spot.id
+export const deleteSpotThunk = (spotId, spot) => async (dispatch) => {
+  const  spotId  = spot.id;
   const response = await csrfFetch("/api/spots/:spotId", {
     method: "DELETE",
   });
