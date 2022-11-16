@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as sessionActions from "../../store/session";
+import * as spotActions from "../../store/spots";
 import { useDispatch } from "react-redux";
 
 function CreateSpotForm() {
@@ -16,7 +16,7 @@ function CreateSpotForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.newSpot({ address, city, state, country, name, description, price })).catch(
+    return dispatch(spotActions.createSpotThunk({ address, city, state, country, name, description, price })).catch(
       async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);

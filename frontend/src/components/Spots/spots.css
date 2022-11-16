@@ -1,14 +1,33 @@
 .spots-list{
   display: flex;
   justify-content: space-around;
-  margin-top: 150px;
+  align-content: center;
+  margin-top: 100px;
 }
 
 button.card{
-  padding: 75px;
-  border: 5px;
+  display: inline;
+  height: 400px;
+  width: 300px;
+  border: 2px;
   border-color: black;
   border-style: solid;
-  border-radius: 5px;
-  size: 50px;
+  border-radius: 15px;
+  background-color: transparent;
+}
+
+/* h2{
+  display: grid;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  color: #ff385c;
+} */
+.container{
+  display: grid;
+  justify-content:center;
+  align-content: flex-end;
+  height: 400px;
+  width: 300px;
+
 }

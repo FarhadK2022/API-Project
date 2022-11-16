@@ -1,9 +1,8 @@
-import React, { useDebugValue, useState } from "react";
+import React from "react";
 import * as spotsActions from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import "./spots.css";
 
 function GetAllSpotsPage() {
@@ -21,19 +20,19 @@ function GetAllSpotsPage() {
 
   return (
     <>
-      <h2>Choose Your Adventure</h2>
+      <h2>Where to Next?</h2>
       <div className="spots-list">
         {spotsObj.map((spot) => (
           <button className="card" key={spot.id}>
-            <img>{spot.previewImage}</img>
-            <h3>{spot.name}</h3>
-            <p>{spot.adress}</p>
-            <p>{spot.city}</p>
-            <p>{spot.state}</p>
-            <p>{spot.country}</p>
-            <p>{spot.price} per night</p>
-            <p>{spot.avgRating}</p>
-            <p>{spot.previewImage}</p>
+          <Link to={`/spots/${spot.id}`}>{spot.name}</Link>
+            <div className="container">
+              <p>{spot.previewImage}</p>
+              <p>
+                {spot.city}, {spot.state}
+              </p>
+              <p>${spot.price} USD/night</p>
+              <p>{spot.avgRating}★</p>
+            </div>
           </button>
         ))}
       </div>
@@ -42,7 +41,3 @@ function GetAllSpotsPage() {
 }
 
 export default GetAllSpotsPage;
-
-{
-  /* <Link key={spot.id} to={`/locations/${spot.id}`}></Link> */
-}

@@ -1,14 +1,36 @@
-ul {
-  display: grid;
-  justify-content:right;
+
+.navbar {
+  display:flex;
+  position: sticky;
+  align-items: center;
+  justify-content:space-between;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-style:outset;
+  border-color: transparent;
+  border-bottom-color: black;
 }
 
 .user-menu{
-  display: grid;
+  align-self: center;
+  width: 80px;
+  height: 50px;
+  cursor:pointer;
+  border-radius: 30px;
+  background-color: transparent;
+}
 
+.fas.fa-user-circle::before{
+  height: 40px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 li {
-  display: grid;
+  /* display: grid; */
   list-style-type: none;
   }

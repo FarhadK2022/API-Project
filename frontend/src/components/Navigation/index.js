@@ -6,28 +6,17 @@ import LoginForm from "../LoginFormModal/LoginForm";
 import SignupFormPage from "../SignupFormModal/SignupForm";
 import "./Navigation.css";
 import { Modal } from "../../context/Modal";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
   const [showModal, setShowModal] = useState(false);
   const [login, setLogin] = useState(true);
 
-  // let sessionLinks;
-  // if (sessionUser) {
-  //   sessionLinks = <ProfileButton user={sessionUser} />;
-  // } else {
-  //   sessionLinks = (
-  //     <>
-  //       <LoginFormModal />
-  //       <SignupFormModal />
-  //     </>
-  //   );
-  // }
-
   return (
-    <ul>
+    <ul className="navbar">
+      <NavLink exact to="/">
+        <h1>Don'tBnb</h1>
+      </NavLink>
       <li>
         {isLoaded && (
           <ProfileButton
@@ -37,10 +26,13 @@ function Navigation({ isLoaded }) {
           />
         )}
       </li>
-      {showModal &&
-      (
+      {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          {login ? <LoginForm setShowModal={setShowModal} /> : <SignupFormPage setShowModal={setShowModal} />}
+          {login ? (
+            <LoginForm setShowModal={setShowModal} />
+          ) : (
+            <SignupFormPage setShowModal={setShowModal} />
+          )}
         </Modal>
       )}
     </ul>

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
 
 function ProfileButton({ user, setLogin, setShowModal }) {
   const dispatch = useDispatch();
@@ -32,6 +30,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
 
   return (
     <>
+
       <button className="user-menu" onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
@@ -60,6 +59,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
           </li>
         </ul>)
       )}
+
     </>
   );
 }

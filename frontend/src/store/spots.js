@@ -51,14 +51,13 @@ export const allSpotsThunk = () => async (dispatch) => {
   return response;
 };
 
-export const spotThunk = (spot) => async (dispatch) => {
-  const { spotId } = spot.id;
-  const response = await csrfFetch("/api/spots/:spotId", {
+export const spotThunk = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: "GET",
   });
   if (response.ok) {
     const data = await response.json();
-    dispatch(getSpot(data.Spot));
+    dispatch(getSpot(data));
   }
   return response;
 };
@@ -88,10 +87,9 @@ export const createSpotThunk = (spot) => async (dispatch) => {
 };
 
 export const editSpotThunk = (spotId, spot) => async (dispatch) => {
-  const  spotId  = spot.id;
   const { address, city, state, country, lat, lng, name, description, price } =
     spot;
-  const response = await csrfFetch("/api/spots/:spotId", {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: "PUT",
     body: JSON.stringify({
       address,
@@ -112,8 +110,8 @@ export const editSpotThunk = (spotId, spot) => async (dispatch) => {
   return response;
 };
 
-export const deleteSpotThunk = (spotId, spot) => async (dispatch) => {
-  const  spotId  = spot.id;
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+  
   const response = await csrfFetch("/api/spots/:spotId", {
     method: "DELETE",
   });
@@ -133,9 +131,10 @@ const spotReducer = (state = initialState, action) => {
       action.spots.forEach((spot) => (newState[spot.id] = spot));
       return newState;
     case GET_SPOT:
-      action.spot.forEach((spot) => (newState[spot.id] = spot));
+      newState[action.spot.id] = action.spot
       return newState;
     case CREATE_SPOT:
+      newState[action.spot.id] = action.spot
       action.spot.forEach((spot) => (newState[spot.id] = spot));
       return newState;
     case EDIT_SPOT:

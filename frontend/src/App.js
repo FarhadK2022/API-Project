@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useParams } from "react-router-dom";
 import * as sessionActions from "./store/session";
+import * as spotActions from "./store/spots"
 import Navigation from "./components/Navigation";
-import { NavLink } from "react-router-dom";
 import GetAllSpotsPage from "./components/Spots";
+import GetOneSpotPage from "./components/Spot";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,14 +16,14 @@ function App() {
 
   return (
     <>
-      <NavLink exact to="/">
-        <h1>Don'tBnb</h1>
-      </NavLink>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/">
+          <Route exact path="/" >
             <GetAllSpotsPage />
+          </Route>
+          <Route path="/spots/:spotId">
+            <GetOneSpotPage />
           </Route>
         </Switch>
       )}
