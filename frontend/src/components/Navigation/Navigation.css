@@ -34,3 +34,7 @@ li {
   /* display: grid; */
   list-style-type: none;
   }
+h2{
+  display: grid;
+  justify-content: center;
+}

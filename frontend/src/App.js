@@ -20,8 +20,10 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/" >
-            <GetAllSpotsPage />
+            <div className="create-spot">
             <CreateSpotFormModal/>
+            </div>
+            <GetAllSpotsPage />
           </Route>
           <Route path="/spots/:spotId">
             <GetOneSpotPage />

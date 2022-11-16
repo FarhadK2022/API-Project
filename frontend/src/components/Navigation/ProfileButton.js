@@ -37,7 +37,6 @@ function ProfileButton({ user, setLogin, setShowModal }) {
       </button>
       {showMenu && ( user ?
         (<ul className="profile-dropdown">
-              <CreateSpotFormModal />
           <li>{user.username}</li>
           <li>{user.email}</li>
           <li>

@@ -1,33 +1,24 @@
 .spots-list{
   display: flex;
-  justify-content: space-around;
-  align-content: center;
-  margin-top: 100px;
-}
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+  column-gap: 20px;
+  row-gap: 20px;
 
-button.card{
-  display: inline;
-  height: 400px;
-  width: 300px;
-  border: 2px;
+}
+.card{
   border-color: black;
   border-style: solid;
   border-radius: 15px;
-  background-color: transparent;
-}
-
-/* h2{
-  display: grid;
+  border-width: 1px;
+  height: 350px;
+  width: 350px;
+  display: flex;
+  align-items: flex-end;
   justify-content: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-  color: #ff385c;
-} */
-.container{
-  display: grid;
-  justify-content:center;
-  align-content: flex-end;
-  height: 400px;
-  width: 300px;
 
 }

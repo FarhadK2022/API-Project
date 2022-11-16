@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 function CreateSpotForm() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
+  const currentSpots = useSelector((state) => state.spots);
+  const spotsObj = Object.values(currentSpots);
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -15,8 +17,10 @@ function CreateSpotForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [url, setURL] = useState("");
+  const [preview, setPreview] = useState(true);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const spot = {
@@ -29,11 +33,13 @@ function CreateSpotForm() {
       name,
       description,
       price,
+      url,
+      preview
     };
-    return dispatch(
-      spotActions.createSpotThunk(sessionUser, spot)
-    );
-    // if (newSpot) (<Redirect to="/" />);
+     await dispatch(spotActions.createSpotThunk(sessionUser, spot));
+
+     await dispatch(spotActions.addImageThunk(spot))
+     
   };
 
   return (
@@ -127,6 +133,16 @@ function CreateSpotForm() {
           type="text"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
+          required
+        />
+      </label>
+      <label>
+        Image URL
+        <input
+          className="inputField"
+          type="text"
+          value={url}
+          onChange={(e) => setURL(e.target.value)}
           required
         />
       </label>

@@ -2,7 +2,7 @@ import "./SpotCardAll.css";
 
 function SpotCardAll({ spot }) {
   return (
-    <div>
+    <div className="allcardsinfo">
       <p>{spot.previewImage}</p>
       <p>
         {spot.city}, {spot.state}

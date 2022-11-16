@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_SPOTS = "spots/getAllSpots";
 const GET_SPOT = "spots/getSpot";
 const CREATE_SPOT = "spots/createSpot";
+const CREATE_IMAGE = "spots/addImage"
 const EDIT_SPOT = "spots/editSpot";
 const DELETE_SPOT = "spots/deleteSpot";
 
@@ -23,6 +24,12 @@ const getSpot = (spot) => {
 const createSpot = (spot) => {
   return {
     type: CREATE_SPOT,
+    spot,
+  };
+};
+const addImage = (spot) => {
+  return {
+    type: CREATE_IMAGE,
     spot,
   };
 };
@@ -88,6 +95,22 @@ export const createSpotThunk = (sessionUser, spot) => async (dispatch) => {
   return response;
 };
 
+export const addImageThunk = ( spot ) => async (dispatch) => {
+  const {spotId, url, preview} = spot
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: "POST",
+    body: JSON.stringify({
+      url,
+      preview,
+    }),
+  });
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(addImage(data));
+  }
+  return response;
+};
+
 export const editSpotThunk = (spotId, spot) => async (dispatch) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     spot;
@@ -136,6 +159,9 @@ const spotReducer = (state = initialState, action) => {
       return newState;
     case CREATE_SPOT:
       newState[action.spot.id] = action.spot
+      return newState;
+      case CREATE_IMAGE:
+      newState[action.spot.previewImage] = action.spot
       return newState;
     case EDIT_SPOT:
       newState[action.spot.id] = action.spot

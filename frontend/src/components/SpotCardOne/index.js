@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-// import { Redirect } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import * as spotActions from "../../store/spots";
 import EditSpotFormModal from "../EditSpotForm/index";
 import "./SpotCardOne.css";
@@ -22,10 +22,10 @@ import "./SpotCardOne.css";
         onClick={(event) => {
           event.stopPropagation();
          dispatch(spotActions.deleteSpotThunk(spot.id));
-          //  <Redirect to="/"/>
         }}>
         Delete Spot
       </button>
+      {/* <Redirect to="/"/> */}
     </div>
   );
 }

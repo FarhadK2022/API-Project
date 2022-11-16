@@ -25,8 +25,9 @@ function GetAllSpotsPage() {
       <div className="spots-list">
         {spotsObj.map((spot) => (
           <div className="card" key={spot.id}>
-            <Link to={`/spots/${spot.id}`}>{spot.name}</Link>
+            <Link to={`/spots/${spot.id}`}>
             <SpotCardAll spot={spot} />
+            </Link>
           </div>
         ))}
       </div>
