@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch, useParams } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
-import * as spotActions from "./store/spots"
 import Navigation from "./components/Navigation";
 import GetAllSpotsPage from "./components/Spots";
 import GetOneSpotPage from "./components/Spot";
+import CreateSpotFormModal from "./components/CreateSpotFormModal"
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ function App() {
         <Switch>
           <Route exact path="/" >
             <GetAllSpotsPage />
+            <CreateSpotFormModal/>
           </Route>
           <Route path="/spots/:spotId">
             <GetOneSpotPage />

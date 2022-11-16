@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
+import CreateSpotFormModal from "../CreateSpotFormModal/index";
 
 function ProfileButton({ user, setLogin, setShowModal }) {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
       </button>
       {showMenu && ( user ?
         (<ul className="profile-dropdown">
+              <CreateSpotFormModal />
           <li>{user.username}</li>
           <li>{user.email}</li>
           <li>

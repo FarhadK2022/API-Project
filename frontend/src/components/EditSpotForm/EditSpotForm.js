@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import * as spotActions from "../../store/spots";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
-
-function CreateSpotForm() {
+function EditSpotForm({ spot }) {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const params = useParams();
+  const { spotId } = params;
+  const [address, setAddress] = useState(spot.address);
+  const [city, setCity] = useState(spot.city);
+  const [state, setState] = useState(spot.state);
+  const [country, setCountry] = useState(spot.country);
+  const [lat, setLat] = useState(spot.lat);
+  const [lng, setLng] = useState(spot.lng);
+  const [name, setName] = useState(spot.name);
+  const [description, setDescription] = useState(spot.description);
+  const [price, setPrice] = useState(spot.price);
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const spot = {
@@ -30,15 +32,15 @@ function CreateSpotForm() {
       description,
       price,
     };
-    return dispatch(
-      spotActions.createSpotThunk(sessionUser, spot)
+     await dispatch(
+      spotActions.editSpotThunk(spotId, spot)
     );
-    // if (newSpot) (<Redirect to="/" />);
-  };
+
+    };
 
   return (
     <form className="formModal" onSubmit={handleSubmit}>
-      <h1>Create New Spot!</h1>
+      <h1>Edit Spot</h1>
       <h2>Spot Details</h2>
       <label>
         Address
@@ -131,10 +133,10 @@ function CreateSpotForm() {
         />
       </label>
       <button className="button" type="submit">
-        Create New Spot
+        Edit This Spot
       </button>
     </form>
   );
 }
 
-export default CreateSpotForm;
+export default EditSpotForm;
