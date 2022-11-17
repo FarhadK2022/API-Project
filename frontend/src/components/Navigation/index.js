@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import LoginForm from "../LoginFormModal/LoginForm";
-import SignupFormPage from "../SignupFormModal/SignupForm";
+import SignupForm from "../SignupFormModal/SignupForm";
+import CreateSpotForm from "../CreateSpotFormModal/CreateSpotForm";
 import "./Navigation.css";
 import { Modal } from "../../context/Modal";
 
@@ -28,10 +29,11 @@ function Navigation({ isLoaded }) {
       </li>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
+          <CreateSpotForm setShowModal={setShowModal}/>
           {login ? (
             <LoginForm setShowModal={setShowModal} />
           ) : (
-            <SignupFormPage setShowModal={setShowModal} />
+            <SignupForm setShowModal={setShowModal} />
           )}
         </Modal>
       )}

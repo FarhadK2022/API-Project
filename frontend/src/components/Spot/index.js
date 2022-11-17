@@ -3,8 +3,7 @@ import * as spotActions from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import EditSpotFormModal from "../EditSpotForm/index";
-import { Link } from "react-router-dom";
+import EditSpotFormModal from "../EditSpotFormModal/index";
 import "./spot.css";
 
 function GetOneSpotPage() {
@@ -19,13 +18,12 @@ function GetOneSpotPage() {
   if (!spot.SpotImages) {
     return null;
   }
-  // const spotObj = Object.values(currentSpot);
+
 
   return (
     <>
       <div>
-        {/* {spotObj.map((spot) => ( */}
-          {/* <Link to={`/spots/${spotId}`}> */}
+
             <div className="one-spot" key={spot.id}>
               <h2>{spot.name}</h2>
               <div className="cardimage">
@@ -52,8 +50,7 @@ function GetOneSpotPage() {
                 </button>
               </div>
             </div>
-          {/* </Link> */}
-        {/* ))} */}
+
       </div>
     </>
   );
