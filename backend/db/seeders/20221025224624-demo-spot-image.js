@@ -37,7 +37,7 @@ module.exports = {
         },
         {
           spotId: 5,
-          url: "ihttps://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-11.jpg",
+          url: "https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-11.jpg",
           preview: true,
         },
       ],

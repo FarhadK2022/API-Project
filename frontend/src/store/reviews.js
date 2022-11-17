@@ -1,124 +1,62 @@
 import { csrfFetch } from "./csrf";
 
-const GET_SPOTS = "spots/getAllSpots";
-const GET_SPOT = "spots/getSpot";
-const CREATE_SPOT = "spots/createSpot";
-const EDIT_SPOT = "spots/editSpot";
-const DELETE_SPOT = "spots/deleteSpot";
+const GET_REVIEWS = "spots/getAllReviews";
+const CREATE_REVIEW = "spots/createReview";
+const DELETE_REVIEW = "spots/deleteReview";
 
-const getAllSpots = (spots) => {
+const getAllReviews = (rev) => {
   return {
-    type: GET_SPOTS,
-    spots,
+    type: GET_REVIEWS,
+    rev,
   };
 };
 
-const getSpot = (spot) => {
+const createReview = (rev) => {
   return {
-    type: GET_SPOT,
-    spot,
+    type: CREATE_REVIEW,
+    rev,
   };
 };
 
-const createSpot = (spot) => {
+const deleteReview = () => {
   return {
-    type: CREATE_SPOT,
-    spot,
+    type: DELETE_REVIEW,
   };
 };
 
-const editSpot = (spot) => {
-  return {
-    type: EDIT_SPOT,
-    spot,
-  };
-};
-
-const deleteSpot = () => {
-  return {
-    type: DELETE_SPOT,
-  };
-};
-
-export const allSpotsThunk = () => async (dispatch) => {
-  const response = await csrfFetch("/api/spots", {
+export const allReviewsThunk = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: "GET",
   });
   if (response.ok) {
     const data = await response.json();
-    dispatch(getAllSpots(data.Spots));
+    dispatch(getAllReviews(data));
   }
   return response;
 };
 
-export const spotThunk = (spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/${spotId}`, {
-    method: "GET",
-  });
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(getSpot(data));
-  }
-  return response;
-};
-
-export const createSpotThunk = (sessionUser, spot) => async (dispatch) => {
-  const {ownerId} = sessionUser;
-  const { address, city, state, country, lat, lng, name, description, price } =
-    spot;
-  const response = await csrfFetch("/api/spots", {
+export const createReviewThunk = (newReview, spotId) => async (dispatch) => {
+  const { review, stars } = newReview;
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: "POST",
     body: JSON.stringify({
-      ownerId,
-      address,
-      city,
-      state,
-      country,
-      lat,
-      lng,
-      name,
-      description,
-      price,
+      review,
+      stars,
     }),
   });
   if (response.ok) {
     const data = await response.json();
-    dispatch(createSpot(data));
+    dispatch(createReview(data));
   }
   return response;
 };
 
-export const editSpotThunk = (spotId, spot) => async (dispatch) => {
-  const { address, city, state, country, lat, lng, name, description, price } =
-    spot;
-  const response = await csrfFetch(`/api/spots/${spotId}`, {
-    method: "PUT",
-    body: JSON.stringify({
-      address,
-      city,
-      state,
-      country,
-      lat,
-      lng,
-      name,
-      description,
-      price,
-    }),
-  });
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(editSpot(data.Spot));
-  }
-  return response;
-};
-
-export const deleteSpotThunk = (spotId) => async (dispatch) => {
-
-  const response = await csrfFetch(`/api/spots/${spotId}`, {
+export const deleteSpotThunk = (reviewId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
     method: "DELETE",
   });
   if (response.ok) {
-    dispatch(deleteSpot());
+    dispatch(deleteReview());
   }
   return response;
 };
@@ -128,21 +66,15 @@ const initialState = {};
 const reviewReducer = (state = initialState, action) => {
   let newState = {};
   switch (action.type) {
-    case GET_SPOTS:
-      action.spots.forEach((spot) => (newState[spot.id] = spot));
+    case GET_REVIEWS:
+      action.revs.forEach((rev) => (newState[rev.id] = rev));
       return newState;
-    case GET_SPOT:
-      newState[action.spot.id] = action.spot
+    case CREATE_REVIEW:
+      newState[action.rev.id] = action.rev;
       return newState;
-    case CREATE_SPOT:
-      newState[action.spot.id] = action.spot
-      return newState;
-    case EDIT_SPOT:
-      newState[action.spot.id] = action.spot
-      return newState;
-    case DELETE_SPOT:
+    case DELETE_REVIEW:
       newState = Object.assign({}, state);
-      newState.spot = null;
+      newState.rev = null;
       return newState;
     default:
       return state;
