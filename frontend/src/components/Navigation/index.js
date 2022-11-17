@@ -29,11 +29,15 @@ function Navigation({ isLoaded }) {
       </li>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <CreateSpotForm setShowModal={setShowModal}/>
           {login ? (
             <LoginForm setShowModal={setShowModal} />
           ) : (
             <SignupForm setShowModal={setShowModal} />
+          )}
+          {login && sessionUser ? (
+            <CreateSpotForm setShowModal={setShowModal} />
+          ) : (
+            false
           )}
         </Modal>
       )}

@@ -16,11 +16,11 @@ function EditSpotForm({ spot, setShowModal }) {
   const [name, setName] = useState(spot.name);
   const [description, setDescription] = useState(spot.description);
   const [price, setPrice] = useState(spot.price);
-
+  const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setErrors([])
     const spot = {
       address,
       city,

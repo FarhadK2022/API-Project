@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import * as spotActions from "../../store/spots";
 import { useDispatch } from "react-redux";
-import "./CreateSpotFormModal.css"
+import "./CreateSpotFormModal.css";
 
-function CreateSpotForm({setShowModal}) {
+function CreateSpotForm({ setShowModal }) {
   const dispatch = useDispatch();
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -20,7 +20,7 @@ function CreateSpotForm({setShowModal}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors([])
+    setErrors([]);
     const spot = {
       address,
       city,
@@ -32,22 +32,20 @@ function CreateSpotForm({setShowModal}) {
       description,
       price,
       url,
-      preview
+      preview,
     };
-     const createdSpot = await dispatch(spotActions.createSpotThunk(spot)).then(() => setShowModal(false)).catch(async (res) => {
-      const data = await res.json();
-      if (data && data.errors) setErrors(data.errors);
-    });
-      if (createdSpot){
-        setShowModal(false)
-      }
-      else {
-        return setErrors([
-          "All fields must be completed!"
-        ]);
-      }
-    };
-
+    const createdSpot = await dispatch(spotActions.createSpotThunk(spot))
+      .then(() => setShowModal(false))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      });
+    if (createdSpot) {
+      setShowModal(false);
+    } else {
+      return setErrors(["All fields must be completed!"]);
+    }
+  };
 
   return (
     <form className="formModal" onSubmit={handleSubmit}>

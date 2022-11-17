@@ -5,7 +5,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import GetAllSpotsPage from "./components/Spots";
 import GetOneSpotPage from "./components/Spot";
-import CreateSpotFormModal from "./components/CreateSpotFormModal"
+import CreateSpotFormModal from "./components/CreateSpotFormModal";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,10 +19,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path="/" >
-            {/* <div className="create-spot">
-            <CreateSpotFormModal/>
-            </div> */}
+          <Route exact path="/">
             <GetAllSpotsPage />
           </Route>
           <Route path="/spots/:spotId">
