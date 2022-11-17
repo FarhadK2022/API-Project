@@ -3,7 +3,7 @@ import * as spotActions from "../../store/spots";
 import { useDispatch } from "react-redux";
 
 
-function CreateSpotForm() {
+function CreateSpotForm({setShowModal}) {
   const dispatch = useDispatch();
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -16,7 +16,7 @@ function CreateSpotForm() {
   const [price, setPrice] = useState("");
   const [url, setURL] = useState("");
   const [preview, setPreview] = useState(true);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,7 +33,8 @@ function CreateSpotForm() {
       url,
       preview
     };
-     await dispatch(spotActions.createSpotThunk(spot));
+     const createdSpot = await dispatch(spotActions.createSpotThunk(spot));
+      if (createdSpot) setShowModal(false)
     };
 
 

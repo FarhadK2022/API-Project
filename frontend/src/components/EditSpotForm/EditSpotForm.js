@@ -3,7 +3,7 @@ import * as spotActions from "../../store/spots";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-function EditSpotForm({ spot }) {
+function EditSpotForm({ spot, setShowModal }) {
   const dispatch = useDispatch();
   const params = useParams();
   const { spotId } = params;
@@ -32,10 +32,10 @@ function EditSpotForm({ spot }) {
       description,
       price,
     };
-     await dispatch(
+     const edittedSpot= await dispatch(
       spotActions.editSpotThunk(spotId, spot)
     );
-
+      if (edittedSpot) setShowModal(false)
     };
 
   return (

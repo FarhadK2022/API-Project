@@ -8,7 +8,7 @@ import "./spots.css";
 
 function GetAllSpotsPage() {
   const dispatch = useDispatch();
-  const currentSpots = useSelector((state) => state.spots);
+  const currentSpots = useSelector((state) => state.spots.allSpots);
   const spotsObj = Object.values(currentSpots);
 
   useEffect(() => {

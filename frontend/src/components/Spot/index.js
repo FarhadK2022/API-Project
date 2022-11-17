@@ -4,50 +4,56 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EditSpotFormModal from "../EditSpotForm/index";
+import { Link } from "react-router-dom";
 import "./spot.css";
 
 function GetOneSpotPage() {
   const dispatch = useDispatch();
-  const params = useParams();
-  const { spotId } = params;
+  let {spotId} = useParams()
+
   useEffect(() => {
     dispatch(spotActions.spotThunk(spotId));
   }, [dispatch, spotId]);
-  const currentSpot = useSelector((state) => state.spots);
-  const spotObj = Object.values(currentSpot);
-  // console.log(currentSpot)
-  // console.log('hi1',spotObj[0].SpotImages[0].url)
 
-  if (!currentSpot) {
+  const spot = useSelector((state) => state.spots.singleSpot);
+  if (!spot.SpotImages) {
     return null;
   }
+  // const spotObj = Object.values(currentSpot);
 
   return (
     <>
       <div>
-        {spotObj.map((spot) => (
-          <div className="one-spot" key={spot.id}>
-            <div className="cardimage"></div>
-            <img src={spot.SpotImages[0].url} alt={""} />
-            <h3>{spot.name}</h3>
-            <p>{spot.address}</p>
-            <p>
-              {spot.city}, {spot.state}
-            </p>
-            <p>${spot.price} USD/night</p>
-            <p>{spot.avgStarRating}★</p>
-            <p>{spot.description}</p>
-            <EditSpotFormModal spot={spot} />
-            <button
-              onClick={(event) => {
-                event.stopPropagation();
-                dispatch(spotActions.deleteSpotThunk(spot.id));
-              }}
-            >
-              Delete Spot
-            </button>
-          </div>
-        ))}
+        {/* {spotObj.map((spot) => ( */}
+          {/* <Link to={`/spots/${spotId}`}> */}
+            <div className="one-spot" key={spot.id}>
+              <h2>{spot.name}</h2>
+              <div className="cardimage">
+                <img src={spot.SpotImages[0]?.url} alt={""} />
+              </div>
+              <div>
+                <p>{spot.address}</p>
+                <p>
+                  {spot.city}, {spot.state}
+                </p>
+                <p>${spot.price} USD/night</p>
+                <p>{spot.avgStarRating}★</p>
+                <p>{spot.description}</p>
+              </div>
+              <div>
+                <EditSpotFormModal spot={spot} />
+                <button
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    dispatch(spotActions.deleteSpotThunk(spot.id));
+                  }}
+                >
+                  Delete Spot
+                </button>
+              </div>
+            </div>
+          {/* </Link> */}
+        {/* ))} */}
       </div>
     </>
   );
