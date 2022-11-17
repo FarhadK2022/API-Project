@@ -3,7 +3,9 @@ import "./SpotCardAll.css";
 function SpotCardAll({ spot }) {
   return (
     <div className="allcardsinfo">
-      <p>{spot.previewImage}</p>
+      <div className="cardimage">
+      {/* <img src={spot.previewImage} /> */}
+      </div>
       <p>
         {spot.city}, {spot.state}
       </p>

@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import * as spotActions from "../../store/spots";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 function CreateSpotForm() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
-  const currentSpots = useSelector((state) => state.spots);
-  const spotsObj = Object.values(currentSpots);
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -19,7 +16,7 @@ function CreateSpotForm() {
   const [price, setPrice] = useState("");
   const [url, setURL] = useState("");
   const [preview, setPreview] = useState(true);
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,11 +33,9 @@ function CreateSpotForm() {
       url,
       preview
     };
-     await dispatch(spotActions.createSpotThunk(sessionUser, spot));
+     await dispatch(spotActions.createSpotThunk(spot));
+    };
 
-     await dispatch(spotActions.addImageThunk(spot))
-     
-  };
 
   return (
     <form className="formModal" onSubmit={handleSubmit}>

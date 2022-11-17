@@ -35,11 +35,11 @@ router.get("/", async (req, res) => {
     let averageStars = reviews / count;
     spot.dataValues.avgRating = averageStars;
 
-    // if (images.preview === true) {
-    //   spot.dataValues.previewImage = images.url;
-    // } else {
-    //   spot.dataValues.previewImage = undefined;
-    // }
+    if (images.preview === true) {
+      spot.dataValues.previewImage = images.url;
+    } else {
+      spot.dataValues.previewImage = null;
+    }
   }
   res.status(200);
   res.json({ Spots, page, size });

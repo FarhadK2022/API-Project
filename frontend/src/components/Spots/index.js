@@ -24,11 +24,11 @@ function GetAllSpotsPage() {
       <h2>Where to Next?</h2>
       <div className="spots-list">
         {spotsObj.map((spot) => (
+              <Link to={`/spots/${spot.id}`}>
           <div className="card" key={spot.id}>
-            <Link to={`/spots/${spot.id}`}>
-            <SpotCardAll spot={spot} />
-            </Link>
-          </div>
+              <SpotCardAll spot={spot} />
+            </div>
+           </Link>
         ))}
       </div>
     </>

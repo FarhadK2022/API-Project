@@ -1,14 +1,24 @@
 import { useDispatch } from "react-redux";
-import { NavLink, Redirect } from "react-router-dom";
+// import { NavLink, Redirect } from "react-router-dom";
 import * as spotActions from "../../store/spots";
 import EditSpotFormModal from "../EditSpotForm/index";
 import "./SpotCardOne.css";
 
  function SpotCardOne({ spot }) {
+  console.log('hi',spot)
   const dispatch = useDispatch();
+  // const {SpotImages} = spot
+  // let index = 0;
+  // const obj = SpotImages.at(index)
+  // console.log(SpotImages)
+  // console.log(obj)
+  // console.log(obj.url)
+
   return (
     <div>
-      <p>{spot.previewImage}</p>
+      <div className="cardimage">
+          <img src={spot.previewImage} alt="" />
+      </div>
       <h3>{spot.name}</h3>
       <p>{spot.address}</p>
       <p>
