@@ -1,27 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import * as reviewActions from "../../store/reviews";
+
 import { useDispatch } from "react-redux";
 import "./CreateReviewFormModal.css";
+
 
 function CreateReviewForm({ spot, setShowModal }) {
   const dispatch = useDispatch();
   const [review, setReview] = useState("");
   const [stars, setStars] = useState("");
-
-  let place = spot.spot.id
+  let spotId = spot.spot.id
+  useEffect(() => {
+    dispatch(reviewActions.allReviewsThunk(spotId));
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
+
 
     const newReview = {
       review,
       stars,
     };
-    const createdReview = await dispatch(reviewActions.createReviewThunk(newReview, place))
 
-    if (createdReview) {
-      setShowModal(false);
-    } 
-  };
+    dispatch(reviewActions.createReviewThunk(newReview, spotId))
+  }
+
+  // if (createdReview) {
+  //   setShowModal(false);
+  //   <Redirect to="/" />
+  // }
 
   return (
     <form className="formModal" onSubmit={handleSubmit}>
@@ -47,6 +55,7 @@ function CreateReviewForm({ spot, setShowModal }) {
           onChange={(e) => setStars(e.target.value)}
           required
         >
+          <option value={0}>----</option>
           <option value={5}>★★★★★</option>
           <option value={4}>★★★★</option>
           <option value={3}>★★★</option>

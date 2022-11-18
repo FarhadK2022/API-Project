@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import * as reviewActions from "../../store/reviews";
 import "./ReviewCard.css";
 
@@ -37,9 +38,9 @@ function ReviewCard({ review }) {
           <p>{review.ReviewImages[0]?.url}</p>
         </div>
         <button
-          onClick={(event) => {
+          onClick={async (event) => {
             event.stopPropagation();
-            dispatch(reviewActions.deleteSpotThunk(review.id));
+            await dispatch(reviewActions.deleteReviewThunk(review.id)).then( <Redirect to="/" />);
           }}
         >
           Delete Review

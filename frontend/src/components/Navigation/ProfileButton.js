@@ -34,6 +34,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
       <button className="user-menu" onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
+
       {showMenu && ( user ?
         (<ul className="profile-dropdown">
          <li>
@@ -62,6 +63,12 @@ function ProfileButton({ user, setLogin, setShowModal }) {
               setLogin(false)
               setShowModal(true)
             }}>Sign Up</button>
+          </li>
+          <li>
+          <button onClick={() => {
+            const demoUser = {credential: "demo-lition@testdrive.io", password: "helloworld"}
+            return dispatch(sessionActions.login(demoUser))
+          }}>Demo</button>
           </li>
         </ul>)
       )}
