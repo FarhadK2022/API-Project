@@ -6,10 +6,7 @@ import './EditSpotFormModal.css'
 
 function EditSpotFormModal({spot}) {
   const [showModal, setShowModal] = useState(false);
-  const sessionUser = useSelector((state) => state.session.user);
-  if (sessionUser === null) return 
 
-  if (sessionUser.id === spot.ownerId) {
 
     return (
       <>
@@ -21,7 +18,7 @@ function EditSpotFormModal({spot}) {
         )}
       </>
     );
-  }
+
 }
 
 export default EditSpotFormModal;

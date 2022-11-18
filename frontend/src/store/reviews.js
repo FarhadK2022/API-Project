@@ -4,10 +4,10 @@ const GET_REVIEWS = "spots/getAllReviews";
 const CREATE_REVIEW = "spots/createReview";
 const DELETE_REVIEW = "spots/deleteReview";
 
-const getAllReviews = (rev) => {
+const getAllReviews = (revs) => {
   return {
     type: GET_REVIEWS,
-    rev,
+    revs,
   };
 };
 
@@ -30,14 +30,14 @@ export const allReviewsThunk = (spotId) => async (dispatch) => {
   });
   if (response.ok) {
     const data = await response.json();
-    dispatch(getAllReviews(data));
+    dispatch(getAllReviews(data.Reviews));
   }
   return response;
 };
 
-export const createReviewThunk = (newReview, spotId) => async (dispatch) => {
+export const createReviewThunk = (newReview, spot) => async (dispatch) => {
   const { review, stars } = newReview;
-  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+  const response = await csrfFetch(`/api/spots/${spot}/reviews`, {
     method: "POST",
     body: JSON.stringify({
       review,
@@ -61,21 +61,26 @@ export const deleteSpotThunk = (reviewId) => async (dispatch) => {
   return response;
 };
 
-const initialState = {};
+const initialState = {allReviews:{}};
 
 const reviewReducer = (state = initialState, action) => {
   let newState = {};
   switch (action.type) {
-    case GET_REVIEWS:
-      action.revs.forEach((rev) => (newState[rev.id] = rev));
+    case GET_REVIEWS:{
+      const newState = {allReviews:{}};
+      action.revs.forEach((rev) => (newState.allReviews[rev.id] = rev));
       return newState;
-    case CREATE_REVIEW:
-      newState[action.rev.id] = action.rev;
+    }
+    case CREATE_REVIEW:{
+      const newState = {...state, allReviews:{...state.allReviews}}
+      newState.allReviews[action.rev.id] = action.rev;
       return newState;
-    case DELETE_REVIEW:
-      newState = Object.assign({}, state);
-      newState.rev = null;
+    }
+    case DELETE_REVIEW:{
+      const newState = {...state, allReviews:{...state.allReviews}}
+      delete newState.allReviews[action.reviewId];
       return newState;
+    }
     default:
       return state;
   }
