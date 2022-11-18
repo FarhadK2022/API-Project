@@ -9,8 +9,8 @@ function CreateSpotForm({ setShowModal }) {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
+  const [lat, setLat] = useState(45);
+  const [lng, setLng] = useState(45);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -43,7 +43,7 @@ function CreateSpotForm({ setShowModal }) {
     if (createdSpot) {
       setShowModal(false);
     } else {
-      return setErrors(["All fields must be completed!"]);
+      return setErrors(["Oops! Looks like a mistake was made on the form. Please check your details and submit again."]);
     }
   };
 
@@ -96,7 +96,7 @@ function CreateSpotForm({ setShowModal }) {
           required
         />
       </label>
-      <label>
+      {/* <label>
         Latitude
         <input
           className="inputField"
@@ -115,12 +115,12 @@ function CreateSpotForm({ setShowModal }) {
           onChange={(e) => setLng(e.target.value)}
           required
         />
-      </label>
+      </label> */}
       <label>
         Name
         <input
           className="inputField"
-          type="text"
+          type="number"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -150,7 +150,7 @@ function CreateSpotForm({ setShowModal }) {
         Image URL
         <input
           className="inputField"
-          type="text"
+          type="url"
           value={url}
           onChange={(e) => setURL(e.target.value)}
           required

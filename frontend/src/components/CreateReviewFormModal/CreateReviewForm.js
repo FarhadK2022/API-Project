@@ -7,37 +7,27 @@ function CreateReviewForm({ spot, setShowModal }) {
   const dispatch = useDispatch();
   const [review, setReview] = useState("");
   const [stars, setStars] = useState("");
-  const [errors, setErrors] = useState([]);
-  const {spotId} = spot
+
+  let place = spot.spot.id
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors([]);
+
     const newReview = {
       review,
       stars,
     };
-    const createdReview = await dispatch(reviewActions.createReviewThunk(newReview, spotId))
-      .then(() => setShowModal(false))
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      });
+    const createdReview = await dispatch(reviewActions.createReviewThunk(newReview, place))
+
     if (createdReview) {
       setShowModal(false);
-    } else {
-      return setErrors(["All fields must be completed!"]);
-    }
+    } 
   };
 
   return (
     <form className="formModal" onSubmit={handleSubmit}>
       <h1>Create Review</h1>
       <h2>Review Details</h2>
-      <ul>
-        {errors.map((error, idx) => (
-          <li key={idx}>{error}</li>
-        ))}
-      </ul>
+
       <label>
         Review
         <input

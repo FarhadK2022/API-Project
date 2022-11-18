@@ -5,7 +5,6 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import GetAllSpotsPage from "./components/Spots";
 import GetOneSpotPage from "./components/Spot";
-import CreateSpotFormModal from "./components/CreateSpotFormModal";
 
 function App() {
   const dispatch = useDispatch();

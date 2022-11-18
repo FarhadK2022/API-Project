@@ -3,7 +3,7 @@ import * as spotActions from "../../store/spots";
 import * as reviewActions from "../../store/reviews";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import ReviewCard from "../ReviewCard/index"
 import EditSpotFormModal from "../EditSpotFormModal/index";
 import CreateReviewFormModal from "../CreateReviewFormModal/index"
@@ -11,8 +11,7 @@ import "./spot.css";
 
 function GetOneSpotPage() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
-  let { spotId } = useParams();
+  const { spotId } = useParams();
 
 
   useEffect(() => {
@@ -22,6 +21,8 @@ function GetOneSpotPage() {
   useEffect(() => {
     dispatch(reviewActions.allReviewsThunk(spotId));
   }, [dispatch, spotId]);
+
+  const sessionUser = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots.singleSpot);
 
   const reviews = useSelector((state) => state.reviews.allReviews)
@@ -29,7 +30,7 @@ function GetOneSpotPage() {
   if (!spot.SpotImages) {
     return null;
   }
-  if (reviewsObj.length < 1) return null
+
   if (sessionUser === null || sessionUser === undefined) {
     return (
       <>
@@ -52,7 +53,7 @@ function GetOneSpotPage() {
             <div className="reviews-list">
         {reviewsObj.map((review) => (
             <div className="reviewcard" key={review.id} value={review.id}>
-              <ReviewCard review={review} spot={spot} />
+              <ReviewCard review={review}  />
             </div>
         ))}
       </div>
@@ -90,9 +91,10 @@ function GetOneSpotPage() {
             <div>
               <EditSpotFormModal spot={spot} />
               <button
-                onClick={(event) => {
+                onClick={async (event) => {
                   event.stopPropagation();
-                  dispatch(spotActions.deleteSpotThunk(spot.id));
+                  await dispatch(spotActions.deleteSpotThunk(spot.id)).then( <Redirect to="/" />);
+
                 }}
               >
                 Delete Spot
@@ -128,7 +130,7 @@ function GetOneSpotPage() {
             </div>
         ))}
       </div>
-      <div><CreateReviewFormModal spotId={spotId}/></div>
+      <div><CreateReviewFormModal spot={spot}/></div>
 
           </div>
         </div>

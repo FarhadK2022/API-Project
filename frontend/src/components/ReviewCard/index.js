@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as reviewActions from "../../store/reviews";
 import "./ReviewCard.css";
 
-function ReviewCard({ review, spot }) {
+function ReviewCard({ review }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
@@ -44,6 +44,22 @@ function ReviewCard({ review, spot }) {
         >
           Delete Review
         </button>
+      </div>
+    );
+  } else {
+    return (
+      <div className="reviewcontainer">
+        <div className="reviewinfo">
+          <p>{review.review}</p>
+          <p>{review.stars}★</p>
+          <p>
+            {review.User.firstName}, {review.createdAt}
+          </p>
+        </div>
+        <div className="reviewimages">
+          <p>{review.ReviewImages[0]?.url}</p>
+        </div>
+
       </div>
     );
   }

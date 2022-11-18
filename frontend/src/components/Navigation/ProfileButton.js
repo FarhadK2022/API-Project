@@ -38,6 +38,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
         (<ul className="profile-dropdown">
          <li>
             <button onClick={() => {
+              setLogin(true)
               setShowModal(true)
             }}>Create Spot</button>
           </li>
