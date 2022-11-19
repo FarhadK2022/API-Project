@@ -20,7 +20,7 @@ function EditSpotForm({ spot, setShowModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors([])
+    setErrors([]);
     const spot = {
       address,
       city,
@@ -32,11 +32,9 @@ function EditSpotForm({ spot, setShowModal }) {
       description,
       price,
     };
-     const edittedSpot= await dispatch(
-      spotActions.editSpotThunk(spotId, spot)
-    );
-      if (edittedSpot) setShowModal(false)
-    };
+    const edittedSpot = await dispatch(spotActions.editSpotThunk(spotId, spot));
+    if (edittedSpot) setShowModal(false);
+  };
 
   return (
     <form className="formModal" onSubmit={handleSubmit}>
@@ -83,26 +81,6 @@ function EditSpotForm({ spot, setShowModal }) {
         />
       </label>
       <label>
-        Latitude
-        <input
-          className="inputField"
-          type="text"
-          value={lat}
-          onChange={(e) => setLat(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Longitude
-        <input
-          className="inputField"
-          type="text"
-          value={lng}
-          onChange={(e) => setLng(e.target.value)}
-          required
-        />
-      </label>
-      <label>
         Name
         <input
           className="inputField"
@@ -126,7 +104,7 @@ function EditSpotForm({ spot, setShowModal }) {
         Price
         <input
           className="inputField"
-          type="text"
+          type="number"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required

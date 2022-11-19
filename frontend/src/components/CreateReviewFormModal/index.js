@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
 import CreateReviewForm from "./CreateReviewForm";
-import './CreateReviewFormModal.css'
+import "./CreateReviewFormModal.css";
 
 function CreateReviewFormModal(spot) {
   const [showModal, setShowModal] = useState(false);
@@ -11,7 +11,7 @@ function CreateReviewFormModal(spot) {
       <button onClick={() => setShowModal(true)}>Create Review</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <CreateReviewForm setShowModal={setShowModal} spot={spot}/>
+          <CreateReviewForm setShowModal={setShowModal} spot={spot} />
         </Modal>
       )}
     </>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import "./LoginFormModal.css";
 
-function LoginForm({setShowModal}) {
+function LoginForm({ setShowModal }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [credential, setCredential] = useState("");
@@ -17,13 +17,12 @@ function LoginForm({setShowModal}) {
     e.preventDefault();
     setErrors([]);
     return dispatch(sessionActions.login({ credential, password }))
-    .then(() => setShowModal(false))
-    .catch(
-      async (res) => {
+      .then(() => setShowModal(false))
+      .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      }
-    );
+        if (data && data.errors)  setErrors(data.errors);
+
+      });
   };
 
   return (
@@ -40,6 +39,7 @@ function LoginForm({setShowModal}) {
         <input
           className="inputField"
           type="text"
+          placeholder="Username or Email"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required
@@ -50,6 +50,7 @@ function LoginForm({setShowModal}) {
         <input
           className="inputField"
           type="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required

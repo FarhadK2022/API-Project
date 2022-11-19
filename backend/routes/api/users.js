@@ -2,7 +2,6 @@ const express = require("express");
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { User } = require("../../db/models");
-
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const db = require("../../db/models");
@@ -35,7 +34,7 @@ const validateSignup = [
 //Sign up a User
 router.post(
   "/",
-
+validateSignup,
   async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;
     const first = await User.findOne({

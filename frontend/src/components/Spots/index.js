@@ -16,9 +16,9 @@ function GetAllSpotsPage() {
     dispatch(spotsActions.allSpotsThunk());
   }, [dispatch]);
 
-useEffect(() => {
-  dispatch(reviewActions.clearReviewsThunk())
-})
+  useEffect(() => {
+    dispatch(reviewActions.clearReviewsThunk());
+  });
   if (!currentSpots) {
     return null;
   }

@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import "./SignupFormModal.css";
 
-function SignupForm({setShowModal}) {
+function SignupForm({ setShowModal }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [firstName, setFirstName] = useState("");
@@ -22,12 +22,19 @@ function SignupForm({setShowModal}) {
     if (password === confirmPassword) {
       setErrors([]);
       return dispatch(
-        sessionActions.signup({ firstName, lastName, email, username, password })
-      ).then(() => setShowModal(false))
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) setErrors(data.errors);
-      });
+        sessionActions.signup({
+          firstName,
+          lastName,
+          email,
+          username,
+          password,
+        })
+      )
+        .then(() => setShowModal(false))
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) setErrors(data.errors);
+        });
     }
     return setErrors([
       "Confirm Password field must be the same as the Password field",
@@ -48,6 +55,7 @@ function SignupForm({setShowModal}) {
         <input
           className="inputField"
           type="text"
+          placeholder="First Name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           required
@@ -58,6 +66,7 @@ function SignupForm({setShowModal}) {
         <input
           className="inputField"
           type="text"
+          placeholder="Last Name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           required
@@ -68,6 +77,7 @@ function SignupForm({setShowModal}) {
         <input
           className="inputField"
           type="text"
+          placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -77,7 +87,8 @@ function SignupForm({setShowModal}) {
         Email
         <input
           className="inputField"
-          type="text"
+          type="email"
+          placeholder="Email Address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -88,6 +99,7 @@ function SignupForm({setShowModal}) {
         <input
           className="inputField"
           type="password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -97,6 +109,7 @@ function SignupForm({setShowModal}) {
         Confirm Password
         <input
           type="password"
+          placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required

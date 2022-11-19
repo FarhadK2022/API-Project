@@ -19,9 +19,10 @@ const createReview = (rev) => {
   };
 };
 
-const deleteReview = () => {
+const deleteReview = (reviewId) => {
   return {
     type: DELETE_REVIEW,
+    reviewId
   };
 };
 
@@ -41,11 +42,11 @@ export const allReviewsThunk = (spotId) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(getAllReviews(data.Reviews));
+    return response;
   }
-  return response;
 };
 
-export const createReviewThunk = (newReview, spotId) => async (dispatch) => {
+export const createReviewThunk = (newReview, spotId, user) => async (dispatch) => {
   const { review, stars } = newReview;
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: "POST",
@@ -56,6 +57,7 @@ export const createReviewThunk = (newReview, spotId) => async (dispatch) => {
   });
   if (response.ok) {
     const data = await response.json();
+    data.User = user
     dispatch(createReview(data));
     return response;
   }
@@ -66,7 +68,7 @@ export const deleteReviewThunk = (reviewId) => async (dispatch) => {
     method: "DELETE",
   });
   if (response.ok) {
-    dispatch(deleteReview());
+    dispatch(deleteReview(reviewId));
     return response;
   }
 };

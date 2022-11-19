@@ -1,18 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import * as spotActions from "../../store/spots";
 import * as reviewActions from "../../store/reviews";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Redirect, useParams } from "react-router-dom";
-import ReviewCard from "../ReviewCard/index"
+import { useParams, Link } from "react-router-dom";
+import ReviewCard from "../ReviewCard/index";
 import EditSpotFormModal from "../EditSpotFormModal/index";
-import CreateReviewFormModal from "../CreateReviewFormModal/index"
+import CreateReviewFormModal from "../CreateReviewFormModal/index";
 import "./spot.css";
 
 function GetOneSpotPage() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-
 
   useEffect(() => {
     dispatch(spotActions.spotThunk(spotId));
@@ -25,8 +24,9 @@ function GetOneSpotPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots.singleSpot);
 
-  const reviews = useSelector((state) => state.reviews.allReviews)
-  const reviewsObj = Object.values(reviews)
+  const reviews = useSelector((state) => state.reviews.allReviews);
+  const reviewsArr = Object.values(reviews);
+
   if (!spot.SpotImages) {
     return null;
   }
@@ -51,13 +51,12 @@ function GetOneSpotPage() {
               <p>{spot.avgStarRating}★</p>
             </div>
             <div className="reviews-list">
-        {reviewsObj.map((review) => (
-            <div className="reviewcard" key={review.id} value={review.id}>
-              <ReviewCard review={review}  />
+              {reviewsArr.map((review) => (
+                <div className="reviewcard" key={review.id} value={review.id}>
+                  <ReviewCard review={review} />
+                </div>
+              ))}
             </div>
-        ))}
-      </div>
-
           </div>
         </div>
       </>
@@ -82,23 +81,24 @@ function GetOneSpotPage() {
               <p>{spot.avgStarRating}★</p>
             </div>
             <div className="reviews-list">
-        {reviewsObj.map((review) => (
-            <div className="reviewcard" key={review.id} value={review.id}>
-              <ReviewCard review={review} />
+              {reviewsArr.map((review) => (
+                <div className="reviewcard" key={review.id} value={review.id}>
+                  <ReviewCard review={review} />
+                </div>
+              ))}
             </div>
-        ))}
-      </div>
             <div>
               <EditSpotFormModal spot={spot} />
+              <Link to={`/`}>
               <button
                 onClick={async (event) => {
                   event.stopPropagation();
-                  await dispatch(spotActions.deleteSpotThunk(spot.id)).then( <Redirect to="/" />);
-
+                  await dispatch(spotActions.deleteSpotThunk(spot.id));
                 }}
-              >
+                >
                 Delete Spot
               </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -124,14 +124,15 @@ function GetOneSpotPage() {
               <p>{spot.avgStarRating}★</p>
             </div>
             <div className="reviews-list">
-        {reviewsObj.map((review) => (
-            <div className="reviewcard" key={review.id} value={review.id}>
-              <ReviewCard review={review} />
+              {reviewsArr.map((review) => (
+                <div className="reviewcard" key={review.id} value={review.id}>
+                  <ReviewCard review={review} />
+                </div>
+              ))}
             </div>
-        ))}
-      </div>
-      <div><CreateReviewFormModal spot={spot}/></div>
-
+            <div>
+              <CreateReviewFormModal spot={spot} />
+            </div>
           </div>
         </div>
       </>

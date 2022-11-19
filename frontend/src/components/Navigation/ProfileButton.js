@@ -30,49 +30,69 @@ function ProfileButton({ user, setLogin, setShowModal }) {
 
   return (
     <>
-
       <button className="user-menu" onClick={openMenu}>
+        <i className="fa-thin fa-bars"/>
         <i className="fas fa-user-circle" />
       </button>
 
-      {showMenu && ( user ?
-        (<ul className="profile-dropdown">
-         <li>
-            <button onClick={() => {
-              setLogin(true)
-              setShowModal(true)
-            }}>Create Spot</button>
-          </li>
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <button className="button" onClick={logout}>
-              Log Out
-            </button>
-          </li>
-        </ul>) :
-        (<ul className="profile-dropdown">
-          <li>
-            <button onClick={() => {
-              setLogin(true)
-              setShowModal(true)
-            }}>Log In</button>
-          </li>
-          <li>
-            <button onClick={() => {
-              setLogin(false)
-              setShowModal(true)
-            }}>Sign Up</button>
-          </li>
-          <li>
-          <button onClick={() => {
-            const demoUser = {credential: "demo-lition@testdrive.io", password: "helloworld"}
-            return dispatch(sessionActions.login(demoUser))
-          }}>Demo</button>
-          </li>
-        </ul>)
-      )}
-
+      {showMenu &&
+        (user ? (
+          <ul className="profile-dropdown">
+            <li>
+              <button
+                onClick={() => {
+                  setLogin(true);
+                  setShowModal(true);
+                }}
+              >
+                Create Spot
+              </button>
+            </li>
+            <li>{user.username}</li>
+            <li>{user.email}</li>
+            <li>
+              <button className="button" onClick={logout}>
+                Log Out
+              </button>
+            </li>
+          </ul>
+        ) : (
+          <ul className="profile-dropdown">
+            <li>
+              <button
+                onClick={() => {
+                  setLogin(true);
+                  setShowModal(true);
+                }}
+              >
+                Log In
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  setLogin(false);
+                  setShowModal(true);
+                }}
+              >
+                Sign Up
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  const demoUser = {
+                    credential: "demo-lition@testdrive.io",
+                    password: "helloworld",
+                  };
+                  return dispatch(sessionActions.login(demoUser));
+                }}
+              >
+                Demo
+              </button>
+            </li>
+          </ul>
+        ))}
     </>
   );
 }

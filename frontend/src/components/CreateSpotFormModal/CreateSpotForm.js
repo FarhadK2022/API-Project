@@ -43,7 +43,9 @@ function CreateSpotForm({ setShowModal }) {
     if (createdSpot) {
       setShowModal(false);
     } else {
-      return setErrors(["Oops! Looks like a mistake was made on the form. Please check your details and submit again."]);
+      return setErrors([
+        "Oops! Looks like a mistake was made on the form. Please check your details and submit again.",
+      ]);
     }
   };
 
@@ -61,6 +63,7 @@ function CreateSpotForm({ setShowModal }) {
         <input
           className="inputField"
           type="text"
+          placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           required
@@ -71,6 +74,7 @@ function CreateSpotForm({ setShowModal }) {
         <input
           className="inputField"
           type="text"
+          placeholder="City"
           value={city}
           onChange={(e) => setCity(e.target.value)}
           required
@@ -81,6 +85,7 @@ function CreateSpotForm({ setShowModal }) {
         <input
           className="inputField"
           type="text"
+          placeholder="State"
           value={state}
           onChange={(e) => setState(e.target.value)}
           required
@@ -91,36 +96,18 @@ function CreateSpotForm({ setShowModal }) {
         <input
           className="inputField"
           type="text"
+          placeholder="Country"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
           required
         />
       </label>
-      {/* <label>
-        Latitude
-        <input
-          className="inputField"
-          type="text"
-          value={lat}
-          onChange={(e) => setLat(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Longitude
-        <input
-          className="inputField"
-          type="text"
-          value={lng}
-          onChange={(e) => setLng(e.target.value)}
-          required
-        />
-      </label> */}
       <label>
         Name
         <input
           className="inputField"
-          type="number"
+          type="text"
+          placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -131,6 +118,7 @@ function CreateSpotForm({ setShowModal }) {
         <input
           className="inputField"
           type="text"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
@@ -140,17 +128,19 @@ function CreateSpotForm({ setShowModal }) {
         Price
         <input
           className="inputField"
-          type="text"
+          type="number"
+          placeholder="Price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
         />
       </label>
       <label>
-        Image URL
+        Image Url
         <input
           className="inputField"
           type="url"
+          placeholder="Image Url"
           value={url}
           onChange={(e) => setURL(e.target.value)}
           required
