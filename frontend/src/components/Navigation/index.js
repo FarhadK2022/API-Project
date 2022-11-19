@@ -15,10 +15,13 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul className="navbar">
+      <div className=""></div>
+      <li className="logo-container">
       <NavLink exact to="/">
-        <h1>Don'tBnb</h1>
+        <img className="logo" src="./images/favicon_rev2.png" alt="Don'tBnB logo"></img>
       </NavLink>
-      <li>
+      </li>
+      <li className="profilebutton">
         {isLoaded && (
           <ProfileButton
             user={sessionUser}

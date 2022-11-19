@@ -6,4 +6,6 @@ h1{
 .active{
   text-decoration: none;
 }
-
+.contentportion{
+  height: 750px
+}

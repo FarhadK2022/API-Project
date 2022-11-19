@@ -31,7 +31,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
   return (
     <>
       <button className="user-menu" onClick={openMenu}>
-        <i className="fa-thin fa-bars"/>
+        <i className="fa-solid fa-bars"/>
         <i className="fas fa-user-circle" />
       </button>
 
