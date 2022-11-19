@@ -8,15 +8,15 @@
   cursor: pointer;
   column-gap: 20px;
   row-gap: 20px;
-
+  padding-top: 7%;
 }
 .card{
   border-color: black;
   border-style: solid;
   border-radius: 15px;
   border-width: 1px;
-  height: 350px;
-  width: 350px;
+  height: 300px;
+  width: 300px;
   display: flex;
   align-items: flex-end;
   justify-content: center;

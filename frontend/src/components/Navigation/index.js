@@ -15,35 +15,42 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul className="navbar">
-      <div className=""></div>
-      <li className="logo-container">
-      <NavLink exact to="/">
-        <img className="logo" src="./images/favicon_rev2.png" alt="Don'tBnB logo"></img>
-      </NavLink>
-      </li>
-      <li className="profilebutton">
-        {isLoaded && (
-          <ProfileButton
-            user={sessionUser}
-            setLogin={setLogin}
-            setShowModal={setShowModal}
-          />
+      <div className="bar1">
+        <li className="logo-container">
+          <NavLink exact to="/">
+            <img
+              className="logo"
+              src="./images/favicon_rev2.png"
+              alt="Don'tBnB logo"
+            ></img>
+          </NavLink>
+        </li>
+      </div>
+      <div className="bar2">
+        <li className="profilebutton">
+          {isLoaded && (
+            <ProfileButton
+              user={sessionUser}
+              setLogin={setLogin}
+              setShowModal={setShowModal}
+            />
+          )}
+        </li>
+        {showModal && (
+          <Modal onClose={() => setShowModal(false)}>
+            {login ? (
+              <LoginForm setShowModal={setShowModal} />
+            ) : (
+              <SignupForm setShowModal={setShowModal} />
+            )}
+            {login && sessionUser ? (
+              <CreateSpotForm setShowModal={setShowModal} />
+            ) : (
+              false
+            )}
+          </Modal>
         )}
-      </li>
-      {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
-          {login ? (
-            <LoginForm setShowModal={setShowModal} />
-          ) : (
-            <SignupForm setShowModal={setShowModal} />
-          )}
-          {login && sessionUser ? (
-            <CreateSpotForm setShowModal={setShowModal} />
-          ) : (
-            false
-          )}
-        </Modal>
-      )}
+      </div>
     </ul>
   );
 }

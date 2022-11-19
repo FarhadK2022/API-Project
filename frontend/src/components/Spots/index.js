@@ -25,7 +25,7 @@ function GetAllSpotsPage() {
 
   return (
     <>
-      <h2>Where to Next?</h2>
+      
       <div className="spots-list">
         {spotsObj.map((spot) => (
           <Link to={`/spots/${spot.id}`}>
