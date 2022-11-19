@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import LoginForm from "../LoginFormModal/LoginForm";
 import SignupForm from "../SignupFormModal/SignupForm";
 import CreateSpotForm from "../CreateSpotFormModal/CreateSpotForm";
-import "./Navigation.css";
 import { Modal } from "../../context/Modal";
+import image from "../../images/favicon_rev2.png"
+import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -14,44 +15,44 @@ function Navigation({ isLoaded }) {
   const [login, setLogin] = useState(true);
 
   return (
-    <ul className="navbar">
-      <div className="bar1">
-        <li className="logo-container">
-          <NavLink exact to="/">
+    <>
+      <div className="navbar">
+        <div className="navbar-left">
+          <Link exact to="/">
             <img
-              className="logo"
-              src="./images/favicon_rev2.png"
+              className="navbar-icon"
+              src= {image}
               alt="Don'tBnB logo"
             ></img>
-          </NavLink>
-        </li>
-      </div>
-      <div className="bar2">
-        <li className="profilebutton">
-          {isLoaded && (
-            <ProfileButton
-              user={sessionUser}
-              setLogin={setLogin}
-              setShowModal={setShowModal}
-            />
+          </Link>
+        </div>
+        <div className="navbar-right">
+          <li>
+            {isLoaded && (
+              <ProfileButton
+                user={sessionUser}
+                setLogin={setLogin}
+                setShowModal={setShowModal}
+              />
+            )}
+          </li>
+          {showModal && (
+            <Modal onClose={() => setShowModal(false)}>
+              {login ? (
+                <LoginForm setShowModal={setShowModal} />
+              ) : (
+                <SignupForm setShowModal={setShowModal} />
+              )}
+              {login && sessionUser ? (
+                <CreateSpotForm setShowModal={setShowModal} />
+              ) : (
+                false
+              )}
+            </Modal>
           )}
-        </li>
-        {showModal && (
-          <Modal onClose={() => setShowModal(false)}>
-            {login ? (
-              <LoginForm setShowModal={setShowModal} />
-            ) : (
-              <SignupForm setShowModal={setShowModal} />
-            )}
-            {login && sessionUser ? (
-              <CreateSpotForm setShowModal={setShowModal} />
-            ) : (
-              false
-            )}
-          </Modal>
-        )}
+        </div>
       </div>
-    </ul>
+    </>
   );
 }
 

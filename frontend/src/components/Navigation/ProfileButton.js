@@ -45,7 +45,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
                   setShowModal(true);
                 }}
               >
-                Create Spot
+                Become a Host
               </button>
             </li>
             <li>{user.username}</li>

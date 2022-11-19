@@ -2,14 +2,20 @@ import "./SpotCardAll.css";
 
 function SpotCardAll({ spot }) {
   return (
-    <div className="allcardsinfo">
-      <img src={spot.previewImage} alt={""} className="card" />
-      <p>
-        {spot.city}, {spot.state}
-      </p>
-      <p>${spot.price} USD/night</p>
-      <p>{spot.avgRating}★</p>
-    </div>
+    <>
+      <div className="card-container">
+        <div className="card">
+          <img src={spot.previewImage} alt={""} />
+          <div className="card-info">
+            <h2>{spot.city}, {spot.state}</h2>
+            <h3>★ {spot.avgRating}</h3>
+            </div>
+            <div className="card-price">
+           <h2>${spot.price} USD/night</h2>
+          </div>
+       </div>
+      </div>
+    </>
   );
 }
 

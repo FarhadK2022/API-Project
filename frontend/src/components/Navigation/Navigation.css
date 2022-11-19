@@ -1,51 +1,67 @@
-
 .navbar {
-  display:flex;
-  position: fixed;
-  align-items:flex-start;
-  justify-content:space-between;
-  margin: 0;
-  padding-bottom: 13px;
-  padding-top: 0px;
-  padding-left: 0px;
-  border-bottom: 2px solid lightgray;
-  width: 100%;
-  height: 60px;
-}
-.bar-1{
-display: flex;
-justify-items: center;
-}
-.bar-2{
   display: flex;
-}
-.logo{
-  display: flex;
-  height: 15% ;
-  width: 100%;
-}
-.profilebutton{
-  display: flex;
-  width: 400px;
-  height: 50px;
-  cursor:grab;
-  border-radius: 30px;
-  background-color: transparent;
-}
-
-.fas.fa-user-circle::before{
-  height: 40px;
-  width: 50px;
-  display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  border-bottom: 1px solid lightgray;
 }
-
-li {
-  /* display: grid; */
-  list-style-type: none;
-  }
-h2{
-  display: grid;
+.navbar-left{
+  display: flex;
+  align-items: center;
   justify-content: center;
+  width: 150px;
+  margin: 0px 0px 0px 25px;
+}
+.navbar-icon {
+  object-fit: contain;
+  height: 100px;
+  margin-left: 20px;
+}
+.navbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  margin-right: 20px;
+}
+.user-menu{
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: white;
+  border: 1px solid lightgray;
+  padding: 5px;
+  height: 50px;
+  width: 80px;
+  cursor: pointer;
+}
+.user-menu:hover{
+  box-shadow: 0px 2px 10px gray;
+}
+.profile-dropdown{
+  position: absolute;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    margin-top: 35px;
+    border-radius: 10px;
+    box-shadow:0px 2px 10px gray;
+    top: 40px;
+    right: 80px;
+    overflow-y: auto;
+    z-index: 100;
+}
+.profile-dropdown li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px;
+  cursor: pointer;
 }
