@@ -25,7 +25,7 @@ function GetAllSpotsPage() {
 
   return (
     <>
-      
+
       <div className="spots-list">
         {spotsObj.map((spot) => (
           <Link to={`/spots/${spot.id}`}>
@@ -35,6 +35,9 @@ function GetAllSpotsPage() {
           </Link>
         ))}
       </div>
+      <footer className="footer">
+        <p>Developed By Farhad Koushan</p>
+        </footer>
     </>
   );
 }

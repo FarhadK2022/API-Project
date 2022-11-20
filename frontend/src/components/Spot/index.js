@@ -59,6 +59,9 @@ function GetOneSpotPage() {
             </div>
           </div>
         </div>
+        <footer className="footer">
+        <p>Developed By Farhad Koushan</p>
+        </footer>
       </>
     );
   } else if (sessionUser.id === spot.ownerId) {
@@ -102,6 +105,9 @@ function GetOneSpotPage() {
             </div>
           </div>
         </div>
+        <footer className="footer">
+        <p>Developed By Farhad Koushan</p>
+        </footer>
       </>
     );
   } else if (sessionUser.id !== spot.ownerId) {
@@ -135,6 +141,9 @@ function GetOneSpotPage() {
             </div>
           </div>
         </div>
+        <footer className="footer">
+        <p>Developed By Farhad Koushan</p>
+        </footer>
       </>
     );
   }

@@ -8,6 +8,7 @@
   column-gap: 35px;
   row-gap: 40px;
   padding-top: 5%;
+  padding-bottom: 5%;
 }
 .card-container{
   border-color: transparent;
@@ -52,5 +53,12 @@
 .card-price > h2{
   font-size: 16px;
   font-weight: 400;
-  margin: 25px 10px 10px 10px
+  margin: 25px 10px 10px 10px;
+}
+.footer{
+  display: flex;
+  height: 50px;
+  justify-content: right;
+  align-content: flex-end;
+  border-top: 1px solid lightgray;
 }

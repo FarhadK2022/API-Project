@@ -15,6 +15,7 @@ function SpotCardAll({ spot }) {
           </div>
        </div>
       </div>
+      
     </>
   );
 }
