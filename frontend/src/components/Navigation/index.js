@@ -6,7 +6,7 @@ import LoginForm from "../LoginFormModal/LoginForm";
 import SignupForm from "../SignupFormModal/SignupForm";
 import CreateSpotForm from "../CreateSpotFormModal/CreateSpotForm";
 import { Modal } from "../../context/Modal";
-import image from "../../images/favicon_rev2.png"
+import image from "../../images/dontbnb-rev3.svg"
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
@@ -52,7 +52,7 @@ function Navigation({ isLoaded }) {
           )}
         </div>
       </div>
-      
+
     </>
   );
 }

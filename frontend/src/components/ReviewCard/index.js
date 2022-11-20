@@ -8,8 +8,9 @@ function ReviewCard({ review }) {
 
   if (sessionUser === null || sessionUser === undefined) {
     return (
-      <div className="reviewcontainer">
+      <div className="reviewcard">
         <div className="reviewinfo">
+          <i className="fas fa-user-circle" />
           <p>{review.review}</p>
           <p>{review.stars}★</p>
           <p>
@@ -20,13 +21,13 @@ function ReviewCard({ review }) {
     );
   } else if (sessionUser.id === review.User.id) {
     return (
-      <div className="reviewcontainer">
+      <div className="reviewcard">
         <div className="reviewinfo">
+          <i className="fas fa-user-circle" />
+          <p>{review.User.firstName}, {review.createdAt}
+          </p>
           <p>{review.review}</p>
           <p>{review.stars}★</p>
-          <p>
-            {review.User.firstName}, {review.createdAt}
-          </p>
         </div>
           <button className="button"
             onClick={(event) => {
@@ -40,13 +41,14 @@ function ReviewCard({ review }) {
     );
   } else {
     return (
-      <div className="reviewcontainer">
+      <div className="reviewcard">
         <div className="reviewinfo">
-          <p>{review.review}</p>
-          <p>{review.stars}★</p>
+          <i className="fas fa-user-circle" />
           <p>
             {review.User.firstName}, {review.createdAt}
           </p>
+          <p>{review.review}</p>
+          <p>{review.stars}★</p>
         </div>
 
       </div>
