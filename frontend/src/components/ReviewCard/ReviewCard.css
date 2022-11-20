@@ -4,7 +4,7 @@
   border-radius: 10px;
   border-width: 1px;
   height: 220px;
-  width: 450px;
+  width: 460px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -26,11 +26,12 @@
 
 .delete{
   display: flex;
+  justify-content: flex-start;
   align-items: flex-end;
   height: 210px;
-  margin-right: 5px;
 }
 .rev{
   display: flex;
   justify-content: space-between;
+  margin: 0px 25px
 }

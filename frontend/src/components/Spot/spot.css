@@ -39,7 +39,14 @@
   padding-bottom: 5%;
 
 }
-
+.one-spot-image{
+  min-width: 700px;
+}
+.owners-tools{
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+}
 .footer{
   display: flex;
   height: 50px;

@@ -51,7 +51,7 @@ function GetOneSpotPage() {
 
 
             <div className="cardimage">
-              <img src={spot.SpotImages[0]?.url} alt={""} />
+              <img className="one-spot-image" src={spot.SpotImages[0]?.url} alt={""} />
             </div>
             <div className="one-spot-description">
 
@@ -90,7 +90,7 @@ function GetOneSpotPage() {
 
             </div>
             <div className="cardimage">
-              <img src={spot.SpotImages[0]?.url} alt={""} />
+              <img className="one-spot-image" src={spot.SpotImages[0]?.url} alt={""} />
             </div>
             <div className="one-spot-description">
 
@@ -104,7 +104,7 @@ function GetOneSpotPage() {
                 </div>
               ))}
             </div>
-            <div>
+            <div className="owners-tools">
               <EditSpotFormModal spot={spot} />
               <Link to={`/`}>
                 <button
@@ -143,7 +143,7 @@ function GetOneSpotPage() {
 
             </div>
             <div className="cardimage">
-              <img src={spot.SpotImages[0]?.url} alt={""} />
+              <img className="one-spot-image" src={spot.SpotImages[0]?.url} alt={""} />
             </div>
             <div className="one-spot-description">
 
@@ -160,7 +160,7 @@ function GetOneSpotPage() {
                 </div>
               ))}
             </div>
-            
+
           </div>
         </div>
         <footer className="footer">
