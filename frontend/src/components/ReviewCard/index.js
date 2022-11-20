@@ -10,10 +10,10 @@ function ReviewCard({ review }) {
     return (
       <div className="reviewcard">
         <div className="reviewinfo">
-          <i className="fas fa-user-circle" />
+          <i className="fas fa-user-circle fa-2xl" />
           <p>{review.User.firstName}, {review.createdAt}</p>
           <p>{review.review}</p>
-          <p>{review.stars}★</p>
+          <p>{review.stars} ★</p>
         </div>
       </div>
     );
@@ -21,31 +21,31 @@ function ReviewCard({ review }) {
     return (
       <div className="reviewcard">
         <div className="reviewinfo">
-          <i className="fas fa-user-circle" />
+          <i className="fas fa-user-circle fa-2xl" />
           <p>{review.User.firstName}, {review.createdAt}</p>
           <p>{review.review}</p>
-          <p>{review.stars}★</p>
-        </div>
+          <p>{review.stars} ★</p>
+        <div className="delete">
           <button className="button"
             onClick={(event) => {
               event.stopPropagation();
               dispatch(reviewActions.deleteReviewThunk(review.id));
             }
-            }>
-            Delete Review
+          }>Delete Review
           </button>
+        </div>
+        </div>
       </div>
     );
   } else {
     return (
       <div className="reviewcard">
         <div className="reviewinfo">
-          <i className="fas fa-user-circle" />
+          <i className="fas fa-user-circle fa-2xl" />
           <p>{review.User.firstName}, {review.createdAt}</p>
           <p>{review.review}</p>
-          <p>{review.stars}★</p>
+          <p>{review.stars} ★</p>
         </div>
-
       </div>
     );
   }

@@ -6,13 +6,14 @@
 
 }
 
-.button {
-  width: 100px;
+button.button {
+  width: 190px;
   height: 50px;
   color: white;
   background-color: #ff385c;
   margin-top: 15px;
-  border-radius: 30px;
+  border-radius: 15px;
+  display: block
 }
 
 .inputField {

@@ -1,3 +1,45 @@
+.one-spot-container{
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+}
+.title {
+  display: flex;
+  justify-content: flex-start;
+  margin: 5px 0px 0px 0px;
+}
+.title h1{
+  margin: 5px 0px 0px 0px;
+}
+.one-spot-info{
+  display: flex;
+  justify-content: flex-start;
+  align-content: flex-end;
+  margin: 0px;
+}
+.one-spot-info p {
+  margin-right: 10px;
+}
+.one-spot-description{
+  display: flex;
+  justify-content: flex-start;
+  width: 450px;
+}
+
+.reviews-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: flex-start;
+  column-gap: 35px;
+  row-gap: 40px;
+  /* padding-top: 5%; */
+  padding-bottom: 5%;
+
+}
+
 .footer{
   display: flex;
   height: 50px;

@@ -1,9 +1,9 @@
 .reviewcard{
-  border-color: black;
+  border-color: lightgray;
   border-style: solid;
   border-radius: 10px;
   border-width: 1px;
-  height: 200px;
+  height: 220px;
   width: 450px;
   display: flex;
   align-items: center;
@@ -17,10 +17,20 @@
   justify-content: space-between;
   justify-items: flex-start;
   align-content: space-between;
+  align-items: flex-start;
   font-size: large;
-  max-height: 200px;
+  max-height: 215px;
   margin-left: 5px;
+  margin-top: 4px;
 }
-.fa.fa-user-cirlce{
-  align-items: left;
+
+.delete{
+  display: flex;
+  align-items: flex-end;
+  height: 210px;
+  margin-right: 5px;
+}
+.rev{
+  display: flex;
+  justify-content: space-between;
 }

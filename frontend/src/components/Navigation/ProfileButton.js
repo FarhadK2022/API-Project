@@ -31,14 +31,18 @@ function ProfileButton({ user, setLogin, setShowModal }) {
   return (
     <>
       <button className="user-menu" onClick={openMenu}>
-        <i className="fa-solid fa-bars"/>
-        <i className="fas fa-user-circle" />
+
+        <i className="fa-solid fa-bars fa-xl"/>
+        <i className="fas fa-user-circle fa-2xl" />
+
       </button>
 
       {showMenu &&
         (user ? (
           <ul className="profile-dropdown">
             <li>
+              <li>{user.username}</li>
+              <li>{user.email}</li>
               <button className="button"
                 onClick={() => {
                   setLogin(true);
@@ -48,8 +52,6 @@ function ProfileButton({ user, setLogin, setShowModal }) {
                 Become a Host
               </button>
             </li>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
             <li>
               <button className="button" onClick={logout}>
                 Log Out

@@ -107,6 +107,7 @@ function SignupForm({ setShowModal }) {
       <label>
         Confirm Password
         <input
+          className="inputField"
           type="password"
           placeholder="Confirm Password"
           value={confirmPassword}

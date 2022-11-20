@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as spotActions from "../../store/spots";
 import * as reviewActions from "../../store/reviews";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,55 +34,69 @@ function GetOneSpotPage() {
   if (sessionUser === null || sessionUser === undefined) {
     return (
       <>
-        <div>
+        <div className="one-spot-container">
           <div className="one-spot" key={spot.id}>
-            <h2>{spot.name}</h2>
-            <div className="cardimage">
-              <img src={spot.SpotImages[0]?.url} alt={""} />
+            <div className="title">
+              <h1>{spot.name}</h1>
             </div>
-            <div>
+            <div className="one-spot-info">
+              <p>{spot.avgStarRating} ★</p>
+              <p>{spot.numReviews} reviews</p>
               <p>{spot.address}</p>
               <p>
                 {spot.city}, {spot.state}
               </p>
-              <p>{spot.description}</p>
               <p>${spot.price} USD/night</p>
-              <p>Number of Reviews:{spot.numReviews}</p>
-              <p>{spot.avgStarRating}★</p>
             </div>
-            <div className="reviews-list">
-              {reviewsArr.map((review) => (
-                <div className="reviewcard" key={review.id} value={review.id}>
-                  <ReviewCard review={review} />
-                </div>
-              ))}
+
+
+            <div className="cardimage">
+              <img src={spot.SpotImages[0]?.url} alt={""} />
+            </div>
+            <div className="one-spot-description">
+
+            <p>{spot.description}</p>
             </div>
           </div>
         </div>
+        <h1>Reviews</h1>
+        <div className="reviews-list">
+          {reviewsArr.map((review) => (
+            <div className="reviewcard" key={review.id} value={review.id}>
+              <ReviewCard review={review} />
+            </div>
+          ))}
+        </div>
         <footer className="footer">
-        <p>Developed By Farhad Koushan</p>
+          <p>Developed By Farhad Koushan</p>
         </footer>
       </>
     );
   } else if (sessionUser.id === spot.ownerId) {
     return (
       <>
-        <div>
+        <div className="one-spot-container">
           <div className="one-spot" key={spot.id}>
-            <h2>{spot.name}</h2>
-            <div className="cardimage">
-              <img src={spot.SpotImages[0]?.url} alt={""} />
-            </div>
-            <div>
+            <h1>{spot.name}</h1>
+            <div className="one-spot-info">
               <p>{spot.address}</p>
               <p>
                 {spot.city}, {spot.state}
               </p>
-              <p>{spot.description}</p>
+
               <p>${spot.price} USD/night</p>
-              <p>Number of Reviews:{spot.numReviews}</p>
-              <p>{spot.avgStarRating}★</p>
+              <p>{spot.numReviews} reviews</p>
+              <p>{spot.avgStarRating} ★</p>
+
             </div>
+            <div className="cardimage">
+              <img src={spot.SpotImages[0]?.url} alt={""} />
+            </div>
+            <div className="one-spot-description">
+
+            <p>{spot.description}</p>
+            </div>
+            <h1>Reviews</h1>
             <div className="reviews-list">
               {reviewsArr.map((review) => (
                 <div className="reviewcard" key={review.id} value={review.id}>
@@ -93,41 +107,51 @@ function GetOneSpotPage() {
             <div>
               <EditSpotFormModal spot={spot} />
               <Link to={`/`}>
-              <button className="button"
-                onClick={async (event) => {
-                  event.stopPropagation();
-                  await dispatch(spotActions.deleteSpotThunk(spot.id));
-                }}
+                <button
+                  className="button"
+                  onClick={async (event) => {
+                    event.stopPropagation();
+                    await dispatch(spotActions.deleteSpotThunk(spot.id));
+                  }}
                 >
-                Delete Spot
-              </button>
+                  Delete Spot
+                </button>
               </Link>
             </div>
           </div>
         </div>
         <footer className="footer">
-        <p>Developed By Farhad Koushan</p>
+          <p>Developed By Farhad Koushan</p>
         </footer>
       </>
     );
   } else if (sessionUser.id !== spot.ownerId) {
     return (
       <>
-        <div>
+        <div className="one-spot-container">
           <div className="one-spot" key={spot.id}>
-            <h2>{spot.name}</h2>
-            <div className="cardimage">
-              <img src={spot.SpotImages[0]?.url} alt={""} />
-            </div>
-            <div>
+            <h1>{spot.name}</h1>
+            <div className="one-spot-info">
               <p>{spot.address}</p>
               <p>
                 {spot.city}, {spot.state}
               </p>
-              <p>{spot.description}</p>
+
               <p>${spot.price} USD/night</p>
-              <p>Number of Reviews:{spot.numReviews}</p>
-              <p>{spot.avgStarRating}★</p>
+              <p>{spot.numReviews} reviews</p>
+              <p>{spot.avgStarRating} ★</p>
+
+            </div>
+            <div className="cardimage">
+              <img src={spot.SpotImages[0]?.url} alt={""} />
+            </div>
+            <div className="one-spot-description">
+
+            <p>{spot.description}</p>
+            </div>
+            <div className="rev">
+            <h1>Reviews</h1>
+              <CreateReviewFormModal spot={spot} />
             </div>
             <div className="reviews-list">
               {reviewsArr.map((review) => (
@@ -136,13 +160,11 @@ function GetOneSpotPage() {
                 </div>
               ))}
             </div>
-            <div>
-              <CreateReviewFormModal spot={spot} />
-            </div>
+            
           </div>
         </div>
         <footer className="footer">
-        <p>Developed By Farhad Koushan</p>
+          <p>Developed By Farhad Koushan</p>
         </footer>
       </>
     );

@@ -12,8 +12,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
-  margin: 0px 0px 0px 25px;
+  width: 20%;
+  margin: 0px 400px 0px 0px;
 }
 .navbar-icon {
   object-fit: contain;
@@ -24,8 +24,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
-  margin-right: 20px;
+  width: 20%;
+  /* margin-right: ; */
 }
 .user-menu{
   display: flex;
@@ -37,7 +37,7 @@
   border: 1px solid lightgray;
   padding: 5px;
   height: 50px;
-  width: 80px;
+  width: 100px;
   cursor: pointer;
 }
 .user-menu:hover{
@@ -45,24 +45,28 @@
 }
 .profile-dropdown{
   position: absolute;
-    display: block;
-    justify-content: center;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
     background-color: white;
     padding: 10px;
     margin-top: 35px;
     border-radius: 10px;
     box-shadow:0px 2px 10px gray;
-    top: 40px;
-    right: 80px;
-    overflow-y: auto;
+    top: 50px;
+    right: 90px;
     z-index: 100;
 }
-.profile-dropdown > li {
-  display: flex;
+.profile-dropdown  li {
+  display: block;
   align-items: center;
-  justify-content: flex-start;
-  padding: 10px 10px;
+  justify-content: center;
+  /* width: 100%; */
+  margin-left: 0px;
+  /* padding: 10px 10px; */
   cursor: pointer;
   /* border-bottom: 1px solid grey; */
 }
+
+
