@@ -26,11 +26,6 @@
   justify-content: space-between;
   justify-items: center;
   align-content: space-around;
-
-}
-.card-price{
-  display: flex;
-  justify-content: flex-start;
 }
 .card-price{
   display: flex;
@@ -38,6 +33,7 @@
 }
 .card > img {
   object-fit: fill;
+  object-position: top;
   min-width: 300px;
   min-height: 200px;
   width: 100%;

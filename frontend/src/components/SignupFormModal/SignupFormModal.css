@@ -1,7 +1,7 @@
 .formModal {
   height: auto;
   width: 500px;
-  padding: 25px;
+  padding: 20px;
   border-radius: 15px;
 
 }
@@ -12,7 +12,7 @@
   color: white;
   background-color: #ff385c;
   margin-top: 15px;
-
+  border-radius: 30px;
 }
 
 .inputField {

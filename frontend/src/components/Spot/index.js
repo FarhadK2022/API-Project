@@ -90,7 +90,7 @@ function GetOneSpotPage() {
             <div>
               <EditSpotFormModal spot={spot} />
               <Link to={`/`}>
-              <button
+              <button className="button"
                 onClick={async (event) => {
                   event.stopPropagation();
                   await dispatch(spotActions.deleteSpotThunk(spot.id));

@@ -8,7 +8,7 @@ function CreateReviewFormModal(spot) {
 
   return (
     <>
-      <button onClick={() => setShowModal(true)}>Create Review</button>
+      <button className="button" onClick={() => setShowModal(true)}>Create Review</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <CreateReviewForm setShowModal={setShowModal} spot={spot} />

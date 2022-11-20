@@ -58,10 +58,11 @@
     overflow-y: auto;
     z-index: 100;
 }
-.profile-dropdown li {
+.profile-dropdown > li {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 10px 10px;
   cursor: pointer;
+  /* border-bottom: 1px solid grey; */
 }

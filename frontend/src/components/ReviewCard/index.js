@@ -28,7 +28,7 @@ function ReviewCard({ review }) {
             {review.User.firstName}, {review.createdAt}
           </p>
         </div>
-          <button
+          <button className="button"
             onClick={(event) => {
               event.stopPropagation();
               dispatch(reviewActions.deleteReviewThunk(review.id));

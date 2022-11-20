@@ -39,7 +39,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
         (user ? (
           <ul className="profile-dropdown">
             <li>
-              <button
+              <button className="button"
                 onClick={() => {
                   setLogin(true);
                   setShowModal(true);
@@ -59,7 +59,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
         ) : (
           <ul className="profile-dropdown">
             <li>
-              <button
+              <button className="button"
                 onClick={() => {
                   setLogin(true);
                   setShowModal(true);
@@ -69,7 +69,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
               </button>
             </li>
             <li>
-              <button
+              <button className="button"
                 onClick={() => {
                   setLogin(false);
                   setShowModal(true);
@@ -79,7 +79,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
               </button>
             </li>
             <li>
-              <button
+              <button className="button"
                 onClick={() => {
                   const demoUser = {
                     credential: "demo-lition@testdrive.io",
@@ -88,7 +88,7 @@ function ProfileButton({ user, setLogin, setShowModal }) {
                   return dispatch(sessionActions.login(demoUser));
                 }}
               >
-                Demo
+                Demo User
               </button>
             </li>
           </ul>

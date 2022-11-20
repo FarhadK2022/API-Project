@@ -51,8 +51,7 @@ function CreateSpotForm({ setShowModal }) {
 
   return (
     <form className="formModal" onSubmit={handleSubmit}>
-      <h1>Create New Spot!</h1>
-      <h2>Spot Details</h2>
+      <h1>Begin Your Hosting Journey!</h1>
       <ul>
         {errors.map((error, idx) => (
           <li key={idx}>{error}</li>
