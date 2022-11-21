@@ -11,7 +11,9 @@ function ReviewCard({ review }) {
       <div className="reviewcard">
         <div className="reviewinfo">
           <i className="fas fa-user-circle fa-2xl" />
-          <p>{review.User.firstName}, {review.createdAt}</p>
+          <p>
+            {review.User.firstName}, {review.createdAt}
+          </p>
           <p>{review.review}</p>
           <p>{review.stars} ★</p>
         </div>
@@ -21,19 +23,29 @@ function ReviewCard({ review }) {
     return (
       <div className="reviewcard">
         <div className="reviewinfo">
-          <i className="fas fa-user-circle fa-2xl" />
-          <p>{review.User.firstName}, {review.createdAt}</p>
-          <p>{review.review}</p>
-          <p>{review.stars} ★</p>
-        <div className="delete">
-          <button className="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              dispatch(reviewActions.deleteReviewThunk(review.id));
-            }
-          }>Delete Review
-          </button>
-        </div>
+          <div className="top-line">
+            <i className="fas fa-user-circle fa-2xl" />
+            <p>
+              {review.User.firstName} {review.createdAt}
+            </p>
+          </div>
+          <div className="middle-line">
+            <p>{review.review}</p>
+          </div>
+          <div className="bottom-line">
+
+              <p>{review.stars} ★</p>
+              <button
+                className="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  dispatch(reviewActions.deleteReviewThunk(review.id));
+                }}
+              >
+                Delete Review
+              </button>
+
+          </div>
         </div>
       </div>
     );
@@ -42,7 +54,9 @@ function ReviewCard({ review }) {
       <div className="reviewcard">
         <div className="reviewinfo">
           <i className="fas fa-user-circle fa-2xl" />
-          <p>{review.User.firstName}, {review.createdAt}</p>
+          <p>
+            {review.User.firstName}, {review.createdAt}
+          </p>
           <p>{review.review}</p>
           <p>{review.stars} ★</p>
         </div>

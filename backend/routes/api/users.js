@@ -34,7 +34,7 @@ const validateSignup = [
 //Sign up a User
 router.post(
   "/",
-validateSignup,
+// validateSignup,
   async (req, res) => {
     const { firstName, lastName, email, password, username } = req.body;
     const first = await User.findOne({

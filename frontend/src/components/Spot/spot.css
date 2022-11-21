@@ -1,55 +1,108 @@
 .one-spot-container{
   display: flex;
+  flex-direction: column;
+  justify-items: center;
+  box-sizing: border-box;
+  padding: 0px 40px;
+}
+
+.one-spot-info-section{
+  display: block;
+  max-width: 900px;
   justify-content: center;
   align-content: flex-start;
+  padding: 0px 40px
 }
-.title {
+
+.one-spot-title {
   display: flex;
   justify-content: flex-start;
-  margin: 5px 0px 0px 0px;
+  vertical-align: top;
+  margin: 0px;
+  height: 40px;
 }
-.title h1{
-  margin: 5px 0px 0px 0px;
+
+.one-spot-title h1{
+  display: flex;
+  justify-content: flex-start;
+  vertical-align: top;
+  margin-top: 10px;
+  height: 40px;
 }
+
 .one-spot-info{
   display: flex;
   justify-content: flex-start;
-  align-content: flex-end;
+  align-content: flex-start;
   margin: 0px;
 }
-.one-spot-info p {
-  margin-right: 10px;
-}
-.one-spot-description{
+
+.one-spot-images-section{
   display: flex;
   justify-content: flex-start;
-  width: 450px;
+  max-width: 900px;
+  padding: 0px 40px;
 }
 
-.reviews-list{
+.cardimage-one{
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
-  align-items: flex-start;
-  column-gap: 35px;
-  row-gap: 40px;
-  /* padding-top: 5%; */
-  padding-bottom: 5%;
+  justify-content: flex-start;
+  flex-direction: column;
+  box-sizing: border-box;
+  object-fit: contain;
+  width: 61%;
+  height: 100%;
+  padding-top: 5px;
+}
 
+.cardimage-quad{
+display: flex;
+justify-content: center;
+flex-direction: row;
+flex-wrap: wrap;
+column-gap: 10px;
+row-gap: 10px;
+align-content: flex-start;
+width: 50%;
 }
-.one-spot-image{
-  min-width: 700px;
+
+.one-spot-description-section{
+  display: flex;
+  justify-content: flex-start;
+  align-content: flex-start;
+  max-width: 900px;
+  padding: 0px 40px;
 }
+
+.one-spot-review-title{
+  display: flex;
+  justify-content: space-between;
+  justify-items: flex-start;
+  align-content: flex-start;
+  height: 40px;
+  padding: 0px 40px;
+}
+
+.reviews-section{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+  max-width: 900px;
+  padding: 40px;
+  row-gap: 5px;
+}
+
 .owners-tools{
   display: flex;
   justify-content: space-between;
   align-content: flex-start;
+  padding: 0px 40px
 }
+
 .footer{
   display: flex;
-  height: 50px;
+  height: 30px;
   justify-content: right;
   align-content: flex-end;
   border-top: 1px solid lightgray;

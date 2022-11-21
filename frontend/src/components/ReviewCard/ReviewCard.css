@@ -4,34 +4,46 @@
   border-radius: 10px;
   border-width: 1px;
   height: 220px;
-  width: 460px;
+  width: 350px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: flex-start;
   flex-wrap: wrap;
 }
 .reviewinfo{
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: space-between;
   justify-items: flex-start;
-  align-content: space-between;
-  align-items: flex-start;
-  font-size: large;
-  max-height: 215px;
+  /* align-content: flex-start; */
+  /* align-items: flex-start; */
+  font-size: medium;
+  max-height: 220px;
+  max-width: 330px;
   margin-left: 5px;
   margin-top: 4px;
+  overflow-wrap: break-word;
+}
+.top-line{
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+.bottom-line{
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-end;
+  align-items: flex-end;
+  padding-bottom: 2px;
 }
 
 .delete{
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  height: 210px;
-}
-.rev{
-  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: space-between;
-  margin: 0px 25px
+  align-items: flex-start;
+  height: 200px;
 }
