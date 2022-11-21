@@ -11,11 +11,11 @@ function SpotCardAll({ spot }) {
             <h3>★ {spot.avgRating}</h3>
             </div>
             <div className="card-price">
-           <h2>${spot.price} USD/night</h2>
+           <h2>${spot.price} night</h2>
           </div>
        </div>
       </div>
-      
+
     </>
   );
 }
