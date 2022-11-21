@@ -1,7 +1,9 @@
 .one-spot-container{
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
   box-sizing: border-box;
   padding: 0px 40px;
 }
