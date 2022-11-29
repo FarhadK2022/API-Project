@@ -124,8 +124,8 @@ function GetOneSpotPage() {
             <Link to={`/`}>
               <button
                 className="button"
-                onClick={async (event) => {
-                  event.stopPropagation();
+                onClick={async () => {
+                  // event.stopPropagation();
                   await dispatch(spotActions.deleteSpotThunk(spot.id));
                 }}
               >
