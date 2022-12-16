@@ -26,7 +26,7 @@ Frameworks, Platforms, and Libraries used:
 
 Database:
 
->  Postgres
+>  PostgreSQL
 
 Hosting:
 
