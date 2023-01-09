@@ -6,6 +6,7 @@ Don'tBnB is a website clone, taking inspiration from AirBnB. Don'tBnB is a site 
 I have truly enjoyed building this app from the ground up, and I hope you enjoy exploring it as well. For your viewing pleasure, you can test features without signing in by selecting the 'Demo User' button from the drop-down menu in the top-right corner.
 
 Live Site Link: [Don'tBnB](https://dontbnb.herokuapp.com)
+Note: Live Link currently unavailable.
 
 ## Wiki Links
 Check out the links below for more details on the routes, features, and database
@@ -25,7 +26,7 @@ Frameworks, Platforms, and Libraries used:
 
 Database:
 
->  Postgres
+>  PostgreSQL
 
 Hosting:
 
