@@ -1,8 +1,12 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     /**
      * Add seed commands here.
      *
@@ -12,7 +16,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-     await queryInterface.bulkInsert('ReviewImages', [
+     return queryInterface.bulkInsert('ReviewImages', [
       {
         reviewId: 1,
         url: 'image1.url',
@@ -36,13 +40,13 @@ module.exports = {
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
+  down: async (queryInterface, Sequelize) => {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('ReviewImages',{},{})
+    return queryInterface.bulkDelete('ReviewImages',{},{})
   }
 };

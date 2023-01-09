@@ -1,8 +1,13 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
+    options.tableName = 'Bookings';
     /**
      * Add seed commands here.
      *
@@ -12,7 +17,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await queryInterface.bulkInsert('Bookings', [
+   return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
         userId: 2,
@@ -46,13 +51,14 @@ module.exports = {
     ], {});
   },
 
-  async down (queryInterface, Sequelize) {
+  down: async (queryInterface, Sequelize) => {
+    options.tableName = 'Bookings';
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Bookings',{},{})
+    return queryInterface.bulkDelete(options, {},{})
   }
 };
