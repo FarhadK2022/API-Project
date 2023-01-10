@@ -18,7 +18,7 @@ module.exports = {
      * }], {});
      */
     return queryInterface.bulkInsert(
-      "SpotImages",
+      options,
       [
         {
           spotId: 1,

@@ -7,6 +7,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    options.tableName = 'ReviewImages';
     /**
      * Add seed commands here.
      *
@@ -16,7 +17,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-     return queryInterface.bulkInsert('ReviewImages', [
+     return queryInterface.bulkInsert( options, [
       {
         reviewId: 1,
         url: 'image1.url',
@@ -41,12 +42,13 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
+    options.tableName = 'ReviewImages';
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    return queryInterface.bulkDelete('ReviewImages',{},{})
+    return queryInterface.bulkDelete(options,{},{})
   }
 };
