@@ -31,17 +31,18 @@ router.get("/", async (req, res) => {
     let reviews = await Review.sum("stars", { where: { spotId: spot.id } });
     let count = await Review.count({ where: { spotId: spot.id } });
     let images = await SpotImage.findOne({ where: { spotId: spot.id } });
+    Promise.all([reviews, count, images]).then((values) => {
+        console.log(values)
+        let averageStars = reviews / count;
+        spot.dataValues.avgRating = averageStars;
 
-    let averageStars = reviews / count;
-    spot.dataValues.avgRating = averageStars;
-
-    if (images.preview === true) {
-      spot.dataValues.previewImage = images.url;
+        if (images.preview === true) {
+          spot.dataValues.previewImage = images.url;
+        } else {
+          spot.dataValues.previewImage = null;
+        }
+      });
     }
-    else {
-      spot.dataValues.previewImage = null;
-    }
-  }
   res.status(200);
   res.json({ Spots, page, size });
 });
