@@ -19,7 +19,7 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path="/spots">
+          <Route exact path="/">
             <GetAllSpotsPage />
           </Route>
           <Route path="/spots/:spotId">
