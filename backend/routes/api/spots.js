@@ -37,9 +37,10 @@ router.get("/", async (req, res) => {
 
     if (images.preview === true) {
       spot.dataValues.previewImage = images.url;
-    } else {
-      spot.dataValues.previewImage = null;
     }
+    // else {
+    //   spot.dataValues.previewImage = null;
+    // }
   }
   res.status(200);
   res.json({ Spots, page, size });
