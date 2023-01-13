@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
     let reviews = await Review.sum("stars", { where: { spotId: spot.id } });
     let count = await Review.count({ where: { spotId: spot.id } });
     let images = await SpotImage.findOne({ where: { spotId: spot.id } });
-    await Promise.all([reviews, count, images]).then((values) => {
+    Promise.all([reviews, count, images]).then((values) => {
         // console.log(values)
         let averageStars = values[0] / values[1];
         spot.dataValues.avgRating = averageStars;
