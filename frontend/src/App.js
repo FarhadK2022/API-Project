@@ -15,11 +15,11 @@ function App() {
 
   return (
     <>
-    
+
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path="/">
+          <Route exact path="/spots">
             <GetAllSpotsPage />
           </Route>
           <Route path="/spots/:spotId">

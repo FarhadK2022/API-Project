@@ -2,7 +2,7 @@ import React from "react";
 import * as spotsActions from "../../store/spots";
 import * as reviewActions from "../../store/reviews";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import SpotCardAll from "../SpotCard";
 import "./spots.css";
