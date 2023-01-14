@@ -16,38 +16,6 @@ const {
 } = require("../../utils/auth");
 
 //Get all spots
-// router.get("/", async (req, res) => {
-//   let { page, size } = req.query;
-
-//   page = parseInt(page);
-//   size = parseInt(size);
-
-//   if (Number.isNaN(page)) page = 1;
-//   if (Number.isNaN(size)) size = 20;
-
-//   const Spots = await Spot.findAll();
-
-//   for await (let spot of Spots) {
-//     let reviews = await Review.sum("stars", { where: { spotId: spot.id } });
-//     let count = await Review.count({ where: { spotId: spot.id } });
-//     let images = await SpotImage.findOne({ where: { spotId: spot.id } });
-//     Promise.all([reviews, count, images]).then((values) => {
-//       console.log("################", spot.id);
-//       console.log(values[2].url);
-//       let averageStars = values[0] / values[1];
-//       spot.dataValues.avgRating = averageStars;
-
-//       if (values[2].preview === true) {
-//         spot.dataValues.previewImage = values[2].url;
-//       } else {
-//         spot.dataValues.previewImage = null;
-//       }
-//     });
-//   }
-//   res.status(200);
-//   // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', Spots)
-//   res.json({ Spots, page, size });
-// });
 router.get("/", async (req, res) => {
   let { page, size } = req.query;
   page = parseInt(page);
@@ -57,7 +25,7 @@ router.get("/", async (req, res) => {
   if (Number.isNaN(size)) size = 20;
 
   const Spots = await Spot.findAll();
-  for await (let spot of Spots) {
+  for (let spot of Spots) {
     let reviews = await Review.sum("stars", { where: { spotId: spot.id } });
     let count = await Review.count({ where: { spotId: spot.id } });
     let images = await SpotImage.findOne({ where: { spotId: spot.id } });
