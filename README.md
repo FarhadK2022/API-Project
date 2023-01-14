@@ -5,8 +5,7 @@ Don'tBnB is a website clone, taking inspiration from AirBnB. Don'tBnB is a site 
 
 I have truly enjoyed building this app from the ground up, and I hope you enjoy exploring it as well. For your viewing pleasure, you can test features without signing in by selecting the 'Demo User' button from the drop-down menu in the top-right corner.
 
-Live Site Link: [Don'tBnB](https://dontbnb.herokuapp.com)
-Note: Live Link currently unavailable.
+Live Site Link: [Don'tBnB](https://dontbnb.onrender.com)
 
 ## Wiki Links
 Check out the links below for more details on the routes, features, and database
@@ -22,15 +21,24 @@ Check out the links below for more details on the routes, features, and database
 ## Tech Stack
 Frameworks, Platforms, and Libraries used:
 
->  Javascript, HTML5, CSS3, Node.js, express.js, React, Redux
+>  ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+
 
 Database:
 
->  PostgreSQL
+>  ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
 Hosting:
 
->  Heroku
+>  ![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
 
 ## Landing Page
 ![Screen Shot 2022-11-21 at 12 59 00 AM](https://user-images.githubusercontent.com/100194132/203008247-017c91c4-5b55-4e48-a29b-c70737f025ae.png)
