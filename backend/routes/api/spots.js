@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
   if (Number.isNaN(size)) size = 20;
 
   const Spots = await Spot.findAll();
-  for (let spot of Spots) {
+  for await (let spot of Spots) {
     let reviews = await Review.sum("stars", { where: { spotId: spot.id } });
     let count = await Review.count({ where: { spotId: spot.id } });
     let images = await SpotImage.findOne({ where: { spotId: spot.id } });
@@ -33,7 +33,7 @@ router.get("/", async (req, res) => {
     let averageStars = reviews / count;
     spot.dataValues.avgRating = averageStars;
 
-    if (images.preview === true) {
+    if (images && images.preview === true) {
       spot.dataValues.previewImage = images.url;
     } else {
       spot.dataValues.previewImage = null;
