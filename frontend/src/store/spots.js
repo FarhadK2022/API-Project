@@ -45,6 +45,7 @@ export const allSpotsThunk = () => async (dispatch) => {
   const response = await csrfFetch("/api/spots", {
     method: "GET",
   });
+  console.log('RRRRRRRRRRRRRRRR', response, response.json())
   if (response.ok) {
     const data = await response.json();
     console.log('*******************************',data.Spots)
