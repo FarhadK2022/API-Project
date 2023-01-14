@@ -47,6 +47,7 @@ export const allSpotsThunk = () => async (dispatch) => {
   });
   if (response.ok) {
     const data = await response.json();
+    console.log('*******************************',data.Spots)
     dispatch(getAllSpots(data.Spots));
   }
   return response;
